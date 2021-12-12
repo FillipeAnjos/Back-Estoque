@@ -16,6 +16,18 @@ class UserController{
 
     }
 
+    async logarUser(request: Request, response: Response){
+
+        const { email, senha } = request.body.param;
+
+        const userService = new UserService();
+
+        const user = userService.logar({ email, senha });
+
+        return user;
+
+    }
+
 }
 
 export { UserController }
