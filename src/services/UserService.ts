@@ -1,6 +1,6 @@
 import { getCustomRepository } from "typeorm"
 import { UsersRepositories } from "../repositories/UsersRepositories"
-import { hash } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 
 interface IUserRequest{
     nome: string; 
@@ -10,6 +10,11 @@ interface IUserRequest{
     nascimento: Date;
     genero: string; 
     admin: string
+}
+
+interface ILogarUser{
+    email: string;
+    senha: string;
 }
 
 class UserService{
@@ -49,6 +54,36 @@ class UserService{
 
         return { success: "Usuário criado com sucesso.", usuario };
     }
+
+    async logar({ email, senha }: ILogarUser){
+
+        const userRepository = getCustomRepository(UsersRepositories);
+
+        const user = await userRepository.findOne({email});
+
+        // Verificar se o email existe.
+        if(!user){
+            var error = { status: false, error: "Email e/ou Senha incorretos." };
+            return error;
+        }
+
+        // Verificar se a senha está correta
+        const senhHash = await compare(senha, user.senha);
+        if(!senhHash){
+            var error = { status: false, error: "Email e/ou Senha incorretos.." };
+            return error;
+        }
+
+        // Verificar se o usuário tem perfil de administrador
+        if(user.admin != 'true'){
+            var error = { status: false, error: "Usuário não é administrador do sistema." };
+            return error;
+        }
+
+        return { status: true, success: "Usuário logado com sucesso.", name: user }
+
+    }
+
 }
 
 export { UserService }
