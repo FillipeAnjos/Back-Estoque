@@ -55,29 +55,24 @@ class ProdutoService{
 
     async listarProdutosParam({filtro, dados}){
 
-        switch (filtro) {
-            case 1:
-                //produto
-                break;
-            case 2:
-                //Categoria
-                break;
-            case 3:
-                //descricao
-                break;
-            case 4:
-                //tamanho
-                break;
-        
-            default:
-                break;
+        let produtoRepository = getCustomRepository(ProdutoRepositories);
+        let dadosProdutos = null;
+
+        if(filtro == 1){
+            dadosProdutos = `select * from produtos where produto like '${dados}%'`;
+        }else if(filtro == 2){
+            dadosProdutos = `select * from produtos where categoria like '${dados}%'`;
+        }else if(filtro == 3){
+            dadosProdutos = `select * from produtos where descricao like '${dados}%'`;
+        }else if(filtro == 4){
+            dadosProdutos = `select * from produtos where tamanho like '${dados}%'`;
+        }else{
+            dadosProdutos = `select * from produtos`;
         }
+
+        var filtrarProdutos = await produtoRepository.query(dadosProdutos);
         
-        const produtoRepository = getCustomRepository(ProdutoRepositories);
-        
-        const filtrarProdutos = await produtoRepository.query(`select * from produtos where produto like '${dados}%'`);
-        
-        console.log(filtrarProdutos);
+        return filtrarProdutos;
         
     }
 

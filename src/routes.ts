@@ -65,8 +65,8 @@ router.get('/listarProdutos', async function(req, res){
 router.post('/listarProdutos', async function(req, res){
 
     try{
-        const produtosPram = await produtoController.listarProdutosParam(req, res);
-        return res.status(200).send({ produtosPram });
+        const produtos = await produtoController.listarProdutosParam(req, res);
+        return res.status(200).send({ produtos });
     }catch(err){
         return res.status(400).send({ error: "Erro ao listar produtos: " + err });
     }
