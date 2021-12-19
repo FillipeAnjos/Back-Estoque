@@ -73,6 +73,17 @@ router.post('/listarProdutos', async function(req, res){
 
 })
 
+router.post('/desativarItem', async function(req, res){
+
+    try{
+        const produto = await produtoController.desativarItem(req, res);
+        return res.status(200).send({ produto });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao desativar o produto: " + err });
+    }
+
+})
+
 router.get('/', function(req, res){
     console.log("Sem Front End");
 });
