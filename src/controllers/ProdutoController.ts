@@ -44,6 +44,18 @@ class ProdutoController{
 
     }
 
+    async desativarItem(request: Request, response: Response) {
+
+        const id = request.body.param;
+
+        const produtoService = new ProdutoService();
+
+        const produtoDesativar = produtoService.desativarItem({ id });
+
+        return produtoDesativar;
+
+    }
+
 }
 
 export { ProdutoController }
