@@ -1,11 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreateProduto1639423727552 implements MigrationInterface {
+export class CreateValor1640013719104 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "produtos",
+                name: "valors",
                 columns: [
                     {
                         name: "id",
@@ -15,36 +15,12 @@ export class CreateProduto1639423727552 implements MigrationInterface {
                         isGenerated: true
                     },
                     {
-                        name: "produto",
-                        type: "varchar"
-                    },
-                    {
-                        name: "categoria",
-                        type: "varchar"
-                    },
-                    {
-                        name: "descricao",
-                        type: "varchar"
-                    },
-                    {
-                        name: "cor",
-                        type: "varchar"
-                    },
-                    {
-                        name: "tamanho",
-                        type: "varchar"
-                    },
-                    {
-                        name: "obs",
-                        type: "varchar"
+                        name: "id_produto",
+                        type: "int"
                     },
                     {
                         name: "valor",
                         type: "float8"
-                    },
-                    {
-                        name: "status",
-                        type: "boolean"
                     },
                     {
                         name: "created_at",
@@ -57,12 +33,22 @@ export class CreateProduto1639423727552 implements MigrationInterface {
                         default: "now()"
                     },
                 ],
+                foreignKeys: [
+                    {
+                        name: "FKProduto",
+                        referencedTableName: "produtos",
+                        referencedColumnNames: ["id"],
+                        columnNames: ["id_produto"],
+                        onDelete: "SET NULL",
+                        onUpdate: "SET NULL"
+                    }
+                ]
             })
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("produtos");
+        await queryRunner.dropTable("valors");
     }
 
 }

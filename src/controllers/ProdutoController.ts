@@ -14,11 +14,11 @@ class ProdutoController{
 
     async cadastrarProduto(request: Request, response: Response){
 
-        const { produto, categoria, descricao, cor, tamanho, obs, status } = request.body.param;
+        const { codigo, produto, categoria, descricao, cor, tamanho, valor, obs, status } = request.body.param;
 
         const produtoService = new ProdutoService();
 
-        const prod = produtoService.cadastrarProduto({ produto, categoria, descricao, cor, tamanho, obs, status });
+        const prod = produtoService.cadastrarProduto({ codigo, produto, categoria, descricao, cor, tamanho, valor, obs, status });
 
         return prod;
     }
@@ -53,6 +53,18 @@ class ProdutoController{
         const produtoDesativar = produtoService.desativarItem({ id });
 
         return produtoDesativar;
+
+    }
+
+    async editarProduto(request: Request, response: Response){
+
+        const { codigo, produto, categoria, descricao, cor, tamanho, valor, obs, status } = request.body.param;
+
+        const produtoService = new ProdutoService();
+
+        const produtoEditar = produtoService.editarProduto({ codigo, produto, categoria, descricao, cor, tamanho, valor, obs, status });
+
+        return produtoEditar;
 
     }
 

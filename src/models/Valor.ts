@@ -1,34 +1,16 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity("produtos")
-class Produto {
+@Entity("valors")
+class Valor {
 
     @PrimaryGeneratedColumn()
     readonly id: number;
 
     @Column()
-    produto: string;
+    id_produto: number;
     
-    @Column()
-    categoria: string;
-
-    @Column()
-    descricao: string;
-
-    @Column()
-    cor: string;
-
-    @Column()
-    tamanho: string;
-
     @Column({ type: "float" })
     valor: number;
-
-    @Column()
-    obs: string;
-
-    @Column()
-    status: boolean
 
     @CreateDateColumn()
     created_at: Date;
@@ -44,4 +26,4 @@ class Produto {
 
 }
 
-export { Produto };
+export { Valor };
