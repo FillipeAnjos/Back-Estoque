@@ -1,12 +1,15 @@
 import { getCustomRepository } from "typeorm";
 import { ProdutoRepositories } from "../repositories/ProdutoRepositories";
+import { ValorRepositories } from "../repositories/ValorRepositories";
 
 interface IProdutoRequest{
+    codigo: number;
     produto: string;
     categoria: string;
     descricao: string;
     cor: string;
     tamanho: string;
+    valor: number;
     obs: string;
     status: boolean;
 }
@@ -27,17 +30,19 @@ class ProdutoService{
         return { success: "Retorno da quantidade de produtos.", qtd: produtoId };
     }
 
-    async cadastrarProduto({ produto, categoria, descricao, cor, tamanho, obs, status }: IProdutoRequest){
-
+    async cadastrarProduto({ codigo, produto, categoria, descricao, cor, tamanho, valor, obs, status }: IProdutoRequest){
+        
         const produtoRepository = getCustomRepository(ProdutoRepositories);
 
-        const produtoSalvado = produtoRepository.create({produto, categoria, descricao, cor, tamanho, obs, status});
+        const produtoSalvado = produtoRepository.create({produto, categoria, descricao, cor, tamanho, valor, obs, status});
 
         var prod = await produtoRepository.save(produtoSalvado);
 
         if(!prod){
             return { error: "Erro ao salvar o produto."};
         }
+
+        this.salvarValor(codigo, valor);
 
         return { success: "Produto salvo com sucesso.", prod };
 
@@ -91,6 +96,44 @@ class ProdutoService{
         }
 
         return { success: "Produto desativado com sucesso." };
+
+    }
+
+    async editarProduto({ codigo, produto, categoria, descricao, cor, tamanho, valor, obs, status }){
+        
+        const produtoRepository = getCustomRepository(ProdutoRepositories);
+        
+        const produtoEditar = { produto, categoria, descricao, cor, tamanho, valor, obs, status };
+        
+        const prodSalved = await produtoRepository.createQueryBuilder("produtos")
+        .update("produtos")
+        .set(produtoEditar)
+        .where("id = :id", { id: codigo })
+        .execute();
+        
+        if(!prodSalved){
+            return { error: "Erro ao atualizar o produto."};
+        }
+
+        this.salvarValor(codigo, valor);
+
+        return { success: "Produto atualizado com sucesso." };
+
+    }
+
+    async salvarValor(codigo: number, valor: number){
+
+        var id_produto = codigo;
+
+        const valorRepository = getCustomRepository(ValorRepositories);
+
+        const valorSalvado = valorRepository.create({id_produto, valor});
+
+        var vlr  = await valorRepository.save(valorSalvado);
+
+        if(!vlr){
+            return { error: "Erro ao salvar o valor."};
+        }
 
     }
 
