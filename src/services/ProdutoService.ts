@@ -117,7 +117,11 @@ class ProdutoService{
 
         this.salvarValor(codigo, valor);
 
-        return { success: "Produto atualizado com sucesso." };
+        var produtosListados = await this.listarProdutos();
+
+        //var resposta = {id: codigo, produto, categoria, descricao, cor, tamanho, valor, obs, status};
+
+        return { success: "Produto atualizado com sucesso.", prod: produtosListados };
 
     }
 
