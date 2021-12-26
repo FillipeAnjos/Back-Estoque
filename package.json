@@ -25,6 +25,6 @@
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Fillipe Anjos",
   "license": "ISC"
 }

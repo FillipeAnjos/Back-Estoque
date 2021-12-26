@@ -23,10 +23,17 @@ React Js / Next Js / Sass / TypeScript / JavaScript / TypeOrm / PostgreSQL
 
 npm install typeorm
 
+npm add express
+npm add @types/express
+
+npm add ts-node-dev -D
+
 npm install bcryptjs
 npm add @types/bcryptjs -D
 
 npm install mysql --save
+
+npm install pg
 
 npm install reflect-metadata
 

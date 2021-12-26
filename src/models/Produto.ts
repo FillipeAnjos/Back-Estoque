@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Estoque } from './Estoque';
 
 @Entity("produtos")
 class Produto {
@@ -35,6 +36,9 @@ class Produto {
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    /*@OneToMany(type => Estoque, estoques => estoques.id_produto)
+    estoques: Estoque[];*/
 
     constructor(){
         /*if(!this.id){
