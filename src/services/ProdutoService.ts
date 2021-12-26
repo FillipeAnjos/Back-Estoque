@@ -1,6 +1,7 @@
 import { getCustomRepository } from "typeorm";
 import { ProdutoRepositories } from "../repositories/ProdutoRepositories";
-import { ValorRepositories } from "../repositories/ValorRepositories";
+import { EstoqueService } from "./EstoqueService";
+import { ValorService } from "./ValorService";
 
 interface IProdutoRequest{
     codigo: number;
@@ -20,7 +21,10 @@ class ProdutoService{
 
         const produtoRepository = getCustomRepository(ProdutoRepositories);
 
-        const produto = await produtoRepository.createQueryBuilder("produtos").orderBy("produtos.id", "DESC").limit(1).getMany();
+        const produto = await produtoRepository.createQueryBuilder("produtos")
+                            .orderBy("produtos.id", "DESC")
+                            .limit(1)
+                            .getMany();
 
         var produtoId = null;
 
@@ -42,37 +46,57 @@ class ProdutoService{
             return { error: "Erro ao salvar o produto."};
         }
 
-        this.salvarValor(codigo, valor);
+        const valorService = new ValorService();
+        valorService.salvarValor(codigo, valor);
+
+        const salvarItem = new EstoqueService();
+        var dadosSalvarItemEstoque = {
+            id_produto: codigo,
+            entrada: 1,
+            saida: null,
+            saldo: 1,
+            valor_atual: valor,
+            acao: 'Cadastro',
+        }        
+        salvarItem.salvarItemEstoque(dadosSalvarItemEstoque);
 
         return { success: "Produto salvo com sucesso.", prod };
 
     }
 
-    async listarProdutos(){
+    async listarProdutos(ativos = true){
 
         const produtoRepository = getCustomRepository(ProdutoRepositories);
 
-        const listarProdutos = await produtoRepository.createQueryBuilder("produtos").where('status = :condition', { condition: true }).orderBy("produtos.id", "ASC").getMany();
+        /*const listarProdutos = await produtoRepository.createQueryBuilder("produtos")
+                                .where('status = :condition', { condition: true })
+                                .orderBy("produtos.id", "ASC")
+                                .getMany();*/
+
+        const listarProdutos = await produtoRepository
+                                .query(`select * from produtos as p inner join estoques as e on p.id = e.id_produto where p.status = ${ativos} order by p.id ASC`);
 
         return listarProdutos;
 
     }
 
-    async listarProdutosParam({filtro, dados}){
+    async listarProdutosParam({filtro, dados, acao}){
 
         let produtoRepository = getCustomRepository(ProdutoRepositories);
+
         let dadosProdutos = null;
+        let queryInicial = 'select * from produtos as p inner join estoques as e on p.id = e.id_produto';
 
         if(filtro == 1){
-            dadosProdutos = `select * from produtos where produto like '${dados}%' and status = true`;
+            dadosProdutos = `${queryInicial} where p.produto like '${dados}%' and p.status = ${acao}`;
         }else if(filtro == 2){
-            dadosProdutos = `select * from produtos where categoria like '${dados}%' and status = true`;
+            dadosProdutos = `${queryInicial} where p.categoria like '${dados}%' and p.status = ${acao}`;
         }else if(filtro == 3){
-            dadosProdutos = `select * from produtos where descricao like '${dados}%' and status = true`;
+            dadosProdutos = `${queryInicial} where p.descricao like '${dados}%' and p.status = ${acao}`;
         }else if(filtro == 4){
-            dadosProdutos = `select * from produtos where tamanho like '${dados}%' and status = true`;
+            dadosProdutos = `${queryInicial} where p.tamanho like '${dados}%' and p.status = ${acao}`;
         }else{
-            dadosProdutos = `select * from produtos where status = true`;
+            dadosProdutos = `${queryInicial} where p.status = ${acao}`;
         }
 
         var filtrarProdutos = await produtoRepository.query(dadosProdutos);
@@ -81,7 +105,7 @@ class ProdutoService{
         
     }
 
-    async desativarItem({ id }){
+    async desativarAtivarItem({ id, acao }){
         
         const produtoRepository = getCustomRepository(ProdutoRepositories);
 
@@ -89,7 +113,11 @@ class ProdutoService{
             return { error: "Erro código invalido."};
         }
 
-        const produto = await produtoRepository.createQueryBuilder("produtos").update("produtos").set({ status: false }).where("id = :id", { id: id }).execute();
+        const produto = await produtoRepository.createQueryBuilder("produtos")
+                            .update("produtos")
+                            .set({ status: acao })
+                            .where("id = :id", { id: id })
+                            .execute();
 
         if(!produto){
             return { error: "Erro ao tentar desativar o item."};
@@ -106,38 +134,21 @@ class ProdutoService{
         const produtoEditar = { produto, categoria, descricao, cor, tamanho, valor, obs, status };
         
         const prodSalved = await produtoRepository.createQueryBuilder("produtos")
-        .update("produtos")
-        .set(produtoEditar)
-        .where("id = :id", { id: codigo })
-        .execute();
+                            .update("produtos")
+                            .set(produtoEditar)
+                            .where("id = :id", { id: codigo })
+                            .execute();
         
         if(!prodSalved){
             return { error: "Erro ao atualizar o produto."};
         }
 
-        this.salvarValor(codigo, valor);
+        const valorService = new ValorService();
+        valorService.salvarValor(codigo, valor);
 
-        var produtosListados = await this.listarProdutos();
-
-        //var resposta = {id: codigo, produto, categoria, descricao, cor, tamanho, valor, obs, status};
+        var produtosListados = await this.listarProdutos(status);
 
         return { success: "Produto atualizado com sucesso.", prod: produtosListados };
-
-    }
-
-    async salvarValor(codigo: number, valor: number){
-
-        var id_produto = codigo;
-
-        const valorRepository = getCustomRepository(ValorRepositories);
-
-        const valorSalvado = valorRepository.create({id_produto, valor});
-
-        var vlr  = await valorRepository.save(valorSalvado);
-
-        if(!vlr){
-            return { error: "Erro ao salvar o valor."};
-        }
 
     }
 

@@ -32,25 +32,34 @@ class ProdutoController{
         return prod;
     }
 
-    async listarProdutosParam(request: Request, response: Response){
-
-        const { filtro, dados } = request.body.param;
+    async listarProdutosInativos(){
 
         const produtoService = new ProdutoService();
 
-        const produtos = produtoService.listarProdutosParam({filtro, dados});
+        const prod = produtoService.listarProdutos(false);
+
+        return prod;
+    }
+
+    async listarProdutosParam(request: Request, response: Response){
+
+        const { filtro, dados, acao } = request.body.param;
+
+        const produtoService = new ProdutoService();
+
+        const produtos = produtoService.listarProdutosParam({filtro, dados, acao});
 
         return produtos;
 
     }
 
-    async desativarItem(request: Request, response: Response) {
+    async desativarAtivarItem(request: Request, response: Response) {
 
-        const id = request.body.param;
+        const { id, acao } = request.body;
 
         const produtoService = new ProdutoService();
 
-        const produtoDesativar = produtoService.desativarItem({ id });
+        const produtoDesativar = produtoService.desativarAtivarItem({ id, acao });
 
         return produtoDesativar;
 

@@ -51,6 +51,17 @@ router.post('/cadastrarProduto', async function(req, res){
 
 });
 
+router.get('/listarProdutosInativos', async function(req, res){
+
+    try{
+        const produtos = await produtoController.listarProdutosInativos();
+        return res.status(200).send({ produtos });
+    }catch(err){
+        return res.status(400).send({ error: "Erro ao listar os produtos: " + err });
+    }
+
+})
+
 router.get('/listarProdutos', async function(req, res){
 
     try{
@@ -73,10 +84,10 @@ router.post('/listarProdutos', async function(req, res){
 
 })
 
-router.post('/desativarItem', async function(req, res){
+router.post('/desativarAtivarItem', async function(req, res){
 
     try{
-        const produto = await produtoController.desativarItem(req, res);
+        const produto = await produtoController.desativarAtivarItem(req, res);
         return res.status(200).send({ produto });
     }catch(err){
         return res.status(400).send({ error: "Error ao desativar o produto: " + err });
