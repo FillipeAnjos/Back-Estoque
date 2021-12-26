@@ -123,7 +123,7 @@ class ProdutoService{
             return { error: "Erro ao tentar desativar o item."};
         }
 
-        return { success: "Produto desativado com sucesso." };
+        return acao == false ? { success: "Produto desativado com sucesso." } : { success: "Produto ativado com sucesso." };
 
     }
 
