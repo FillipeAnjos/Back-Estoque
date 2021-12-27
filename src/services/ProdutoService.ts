@@ -1,6 +1,7 @@
 import { getCustomRepository } from "typeorm";
 import { ProdutoRepositories } from "../repositories/ProdutoRepositories";
 import { EstoqueService } from "./EstoqueService";
+import { QuantidadeService } from "./QuantidadeService";
 import { ValorService } from "./ValorService";
 
 interface IProdutoRequest{
@@ -49,6 +50,13 @@ class ProdutoService{
         const valorService = new ValorService();
         valorService.salvarValor(codigo, valor);
 
+        const quantidadeService = new QuantidadeService();
+        var dadosQuantidade = {
+            id_produto: codigo,
+            quantidade: 1
+        }
+        quantidadeService.salvarQuantidade(dadosQuantidade);
+
         const salvarItem = new EstoqueService();
         var dadosSalvarItemEstoque = {
             id_produto: codigo,
@@ -74,10 +82,35 @@ class ProdutoService{
                                 .getMany();*/
 
         const listarProdutos = await produtoRepository
-                                .query(`select * from produtos as p inner join estoques as e on p.id = e.id_produto where p.status = ${ativos} order by p.id ASC`);
+                                .query(`select * from produtos as p inner join quantidades as q on p.id = q.id_produto where p.status = ${ativos} order by p.id ASC`);
 
         return listarProdutos;
 
+    }
+
+    async listarProdutosBalancoParam({filtro, dados, acao}){
+
+        let produtoRepository = getCustomRepository(ProdutoRepositories);
+
+        let dadosProdutos = null;
+        let queryInicial = 'select * from produtos as p inner join quantidades as q on p.id = q.id_produto';
+
+        if(filtro == 1){
+            dadosProdutos = `${queryInicial} where p.produto like '${dados}%' `;
+        }else if(filtro == 2){
+            dadosProdutos = `${queryInicial} where p.categoria like '${dados}%' `;
+        }else if(filtro == 3){
+            dadosProdutos = `${queryInicial} where p.descricao like '${dados}%' `;
+        }else if(filtro == 4){
+            dadosProdutos = `${queryInicial} where p.tamanho like '${dados}%' `;
+        }else{
+            dadosProdutos = `${queryInicial}`;
+        }
+
+        var filtrarProdutos = await produtoRepository.query(dadosProdutos);
+        
+        return filtrarProdutos;
+        
     }
 
     async listarProdutosParam({filtro, dados, acao}){
@@ -85,7 +118,7 @@ class ProdutoService{
         let produtoRepository = getCustomRepository(ProdutoRepositories);
 
         let dadosProdutos = null;
-        let queryInicial = 'select * from produtos as p inner join estoques as e on p.id = e.id_produto';
+        let queryInicial = 'select * from produtos as p inner join quantidades as q on p.id = q.id_produto';
 
         if(filtro == 1){
             dadosProdutos = `${queryInicial} where p.produto like '${dados}%' and p.status = ${acao}`;
@@ -103,6 +136,22 @@ class ProdutoService{
         
         return filtrarProdutos;
         
+    }
+
+    async listarProdutosBalanco(){
+
+        const produtoRepository = getCustomRepository(ProdutoRepositories);
+
+        /*const listarProdutos = await produtoRepository.createQueryBuilder("produtos")
+                                .where('status = :condition', { condition: true })
+                                .orderBy("produtos.id", "ASC")
+                                .getMany();*/
+
+        const listarProdutos = await produtoRepository
+                                .query(`select * from produtos as p inner join quantidades as q on p.id = q.id_produto order by p.id ASC`);
+
+        return listarProdutos;
+
     }
 
     async desativarAtivarItem({ id, acao }){

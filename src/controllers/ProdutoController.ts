@@ -41,6 +41,26 @@ class ProdutoController{
         return prod;
     }
 
+    async listarProdutosBalanco(){
+
+        const produtoService = new ProdutoService();
+
+        const prod = produtoService.listarProdutosBalanco();
+
+        return prod;
+    }
+
+    async listarProdutosBalancoParam(request: Request, response: Response){
+
+        const { filtro, dados, acao } = request.body.param;
+
+        const produtoService = new ProdutoService();
+
+        const prod = produtoService.listarProdutosBalancoParam({ filtro, dados, acao });
+
+        return prod;
+    }
+
     async listarProdutosParam(request: Request, response: Response){
 
         const { filtro, dados, acao } = request.body.param;
