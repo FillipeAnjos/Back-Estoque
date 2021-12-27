@@ -1,11 +1,13 @@
 import { Router, Request, Response } from 'express';
 import { ProdutoController } from './controllers/ProdutoController';
 import { UserController } from './controllers/UserController';
+import { QuantidadeController } from './controllers/QuantidadeController';
 
 const router = Router();
 
-const userController    = new UserController();
-const produtoController = new ProdutoController();
+const userController       = new UserController();
+const produtoController    = new ProdutoController();
+const quantidadeController = new QuantidadeController();
 
 router.post('/cadastrarUser', async function(req: Request, res: Response) {
     
@@ -84,6 +86,28 @@ router.post('/listarProdutos', async function(req, res){
 
 })
 
+router.get('/listarProdutosBalanco', async function(req, res){
+
+    try{
+        const produtos = await produtoController.listarProdutosBalanco();
+        return res.status(200).send({ produtos });
+    }catch(err){
+        return res.status(400).send({ error: "Erro ao listar os produtos: " + err });
+    }
+
+})
+
+router.post('/listarProdutosBalanco', async function(req, res){
+
+    try{
+        const produtos = await produtoController.listarProdutosBalancoParam(req, res);
+        return res.status(200).send({ produtos });
+    }catch(err){
+        return res.status(400).send({ error: "Erro ao listar os produtos: " + err });
+    }
+
+})
+
 router.post('/desativarAtivarItem', async function(req, res){
 
     try{
@@ -102,6 +126,17 @@ router.post('/editarProduto', async function(req, res){
         return res.status(200).send({ produto });
     }catch(err){
         return res.status(400).send({ error: "Error ao atualizar o produto: " + err });
+    }
+
+})
+
+router.post('/editarUnidade', async function(req, res){
+
+    try{
+        const unidade = await quantidadeController.editarUnidade(req, res);
+        return res.status(200).send({ unidade });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao atualizar a quantidade do produto: " + err });
     }
 
 })

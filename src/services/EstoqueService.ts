@@ -21,7 +21,7 @@ class EstoqueService{
         var itemEstoque = estoqueRepository.save(salvarEstoque);
 
         if(!itemEstoque){
-            return { error: "Erro ao salvar o produto no estoque."};
+            return { error: "Erro ao salvar item no estoque."};
         }
 
     }
