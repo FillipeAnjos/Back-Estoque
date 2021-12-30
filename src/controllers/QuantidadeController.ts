@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { getCustomRepository } from "typeorm";
-import { QuantidadeRepositories } from "../repositories/QuantidadeRepositories";
 import { QuantidadeService } from "../services/QuantidadeService";
 
 class QuantidadeController{

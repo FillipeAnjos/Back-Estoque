@@ -2,12 +2,14 @@ import { Router, Request, Response } from 'express';
 import { ProdutoController } from './controllers/ProdutoController';
 import { UserController } from './controllers/UserController';
 import { QuantidadeController } from './controllers/QuantidadeController';
+import { FechamentoController } from './controllers/FechamentoController';
 
 const router = Router();
 
 const userController       = new UserController();
 const produtoController    = new ProdutoController();
 const quantidadeController = new QuantidadeController();
+const fechamentoController = new FechamentoController();
 
 router.post('/cadastrarUser', async function(req: Request, res: Response) {
     
@@ -137,6 +139,28 @@ router.post('/editarUnidade', async function(req, res){
         return res.status(200).send({ unidade });
     }catch(err){
         return res.status(400).send({ error: "Error ao atualizar a quantidade do produto: " + err });
+    }
+
+})
+
+router.get('/buscarStatusCaixa', async function(req, res){
+
+    try{
+        const fechamento = await fechamentoController.buscarStatusCaixa();
+        return res.status(200).send({ fechamento });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao atualizar o fechamento: " + err });
+    }
+
+})
+
+router.post('/salvarFechamento', async function(req, res){
+
+    try{
+        const fechamento = await fechamentoController.fechamentoSalvar(req, res);
+        return res.status(200).send({ fechamento });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao atualizar o fechamento: " + err });
     }
 
 })
