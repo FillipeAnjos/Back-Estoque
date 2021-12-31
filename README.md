@@ -40,6 +40,8 @@ npm install reflect-metadata
 npm add cors
 npm add @types/cors -D
 
+npm install moment --save
+
 ### BACK-END COMANDOS
 
 //Comando para criar uma migration

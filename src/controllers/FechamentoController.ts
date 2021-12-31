@@ -24,6 +24,18 @@ class FechamentoController{
         
     }
 
+    async fechamentoSalvarAnterior(request: Request, response: Response) {
+
+        const { valor_total, data, status } = request.body.param;
+
+        const fechamentoService = new FechamentoService();
+
+        const fechar = fechamentoService.fechamentoSalvarAnterior({ valor_total, data, status });
+
+        return fechar;
+
+    }
+
 }
 
 export { FechamentoController }

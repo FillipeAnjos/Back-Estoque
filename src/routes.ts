@@ -165,6 +165,17 @@ router.post('/salvarFechamento', async function(req, res){
 
 })
 
+router.post('/salvarFechamentoAnterior', async function(req, res){
+
+    try{
+        const fechamento = await fechamentoController.fechamentoSalvarAnterior(req, res);
+        return res.status(200).send({ fechamento });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao atualizar o fechamento: " + err });
+    }
+
+})
+
 router.get('/', function(req, res){
     console.log("Sem Front End");
 });
