@@ -15,6 +15,11 @@ interface ISalvarQtd{
     quantidade: number;
 }
 
+interface IVerificarQuantidade{
+    id_produto: number; 
+    unidade: number;
+}
+
 class QuantidadeService{
 
     async salvarQuantidade(dados: ISalvarQtd){
@@ -106,6 +111,28 @@ class QuantidadeService{
             return { success: "Quantidade atualizada com sucesso." };
 
         }
+
+    }
+
+    async verificarQuantidadeItem({id_produto, unidade}: IVerificarQuantidade){
+
+        const quantidadeRepository = getCustomRepository(QuantidadeRepositories);
+
+        const dadosQuantidade = await quantidadeRepository.createQueryBuilder("quantidades")
+                                            .where("id_produto = :id_produto", {id_produto: id_produto})
+                                            .getOne();
+
+                            const { quantidade } = dadosQuantidade;
+
+        if(unidade > quantidade){
+            return { error: "A quantidade escolhida não pode ser maior que a quantidade em loja."};
+        }
+
+        if(unidade <= 0){
+            return { error: "A quantidade escolhida tem que ser maior que zero."};
+        }
+
+        return unidade;
 
     }
 

@@ -176,6 +176,17 @@ router.post('/salvarFechamentoAnterior', async function(req, res){
 
 })
 
+router.post('/verificarQuantidadeItem', async function(req, res){
+
+    try{
+        const unidade = await quantidadeController.verificarQuantidadeItem(req, res);
+        return res.status(200).send({ unidade });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao atualizar o fechamento: " + err });
+    }
+
+})
+
 router.get('/', function(req, res){
     console.log("Sem Front End");
 });
