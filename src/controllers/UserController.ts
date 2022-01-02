@@ -6,11 +6,11 @@ class UserController{
 
     async criarUser(request: Request, response: Response){
 
-        const { nome, sobre, email, senha, nascimento, genero, admin } = request.body.param
+        const { nome, sobre, email, senha, nascimento, genero, admin, senhaadm } = request.body.param
 
         const userService =  new UserService();
 
-        const user = userService.execute({ nome, sobre, email, senha, nascimento, genero, admin });
+        const user = userService.execute({ nome, sobre, email, senha, nascimento, genero, admin, senhaadm });
 
         return user;
 

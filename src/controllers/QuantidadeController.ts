@@ -15,6 +15,18 @@ class QuantidadeController{
         
     }
 
+    async verificarQuantidadeItem(request: Request, response: Response){
+
+        const { id_produto, unidade } = request.body.param;
+
+        const quantidadeService = new QuantidadeService();
+
+        const qtd = quantidadeService.verificarQuantidadeItem({ id_produto, unidade });
+
+        return qtd;
+
+    }
+
 }
 
 export { QuantidadeController }

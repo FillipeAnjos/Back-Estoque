@@ -9,7 +9,8 @@ interface IUserRequest{
     senha: string; 
     nascimento: Date;
     genero: string; 
-    admin: string
+    admin: string;
+    senhaadm: string;
 }
 
 interface ILogarUser{
@@ -19,7 +20,7 @@ interface ILogarUser{
 
 class UserService{
 
-    async execute({ nome, sobre, email, senha, nascimento, genero, admin }: IUserRequest){
+    async execute({ nome, sobre, email, senha, nascimento, genero, admin, senhaadm }: IUserRequest){
         
         const usersRepository = getCustomRepository(UsersRepositories);
 
@@ -38,7 +39,7 @@ class UserService{
         }
 
         const senhaHash = await hash(senha, 8);
-        const adminSalvarBanco = admin == '24042019' ? 'true' : 'false';
+        const adminSalvarBanco = admin == senhaadm ? 'true' : 'false';
 
         const userSalved = usersRepository.create({
             nome, 
@@ -80,7 +81,8 @@ class UserService{
             return error;
         }
 
-        return { status: true, success: "Usuário logado com sucesso.", name: user }
+        //return { status: true, success: "Usuário logado com sucesso.", name: user }
+        return { status: true, success: "Usuário logado com sucesso.", name: user.nome }
 
     }
 
