@@ -3,6 +3,7 @@ import { ProdutoController } from './controllers/ProdutoController';
 import { UserController } from './controllers/UserController';
 import { QuantidadeController } from './controllers/QuantidadeController';
 import { FechamentoController } from './controllers/FechamentoController';
+import { VendaController } from './controllers/VendaController';
 
 const router = Router();
 
@@ -10,6 +11,7 @@ const userController       = new UserController();
 const produtoController    = new ProdutoController();
 const quantidadeController = new QuantidadeController();
 const fechamentoController = new FechamentoController();
+const vendaController      = new VendaController();
 
 router.post('/cadastrarUser', async function(req: Request, res: Response) {
     
@@ -181,6 +183,28 @@ router.post('/verificarQuantidadeItem', async function(req, res){
     try{
         const unidade = await quantidadeController.verificarQuantidadeItem(req, res);
         return res.status(200).send({ unidade });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao atualizar o fechamento: " + err });
+    }
+
+})
+
+router.get('/buscarUsers', async function(req, res){
+
+    try{
+        const usuarios = await userController.buscarUsers();
+        return res.status(200).send({ usuarios });
+    }catch(err){
+        return res.status(400).send({ error: "Erro ao buscar os usuarios: " + err });
+    }
+
+})
+
+router.post('/realizarVenda', async function(req, res){
+
+    try{
+        const venda = await vendaController.salvarVenda(req, res);
+        return res.status(200).send({ venda });
     }catch(err){
         return res.status(400).send({ error: "Error ao atualizar o fechamento: " + err });
     }

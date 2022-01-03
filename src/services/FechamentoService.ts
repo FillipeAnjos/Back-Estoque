@@ -130,6 +130,20 @@ class FechamentoService{
         
     }
 
+    async buscarIdFechamento(){
+
+        const fechamentoRepository = getCustomRepository(FechamentoRepositories);
+
+        const idFechamento = await fechamentoRepository.createQueryBuilder("fechamentos")
+                                                    .where("valor_total = :vl", {vl: 0})
+                                                    .andWhere("status = :status", {status: true})
+                                                    .getOne();
+
+        const { id } = idFechamento;
+
+        return id;
+    }
+
 }
 
 export { FechamentoService }
