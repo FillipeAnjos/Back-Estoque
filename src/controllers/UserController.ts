@@ -28,6 +28,16 @@ class UserController{
 
     }
 
+    async buscarUsers(){
+
+        const userService = new UserService();
+
+        const user = userService.buscarUsers();
+
+        return user;
+
+    }
+
 }
 
 export { UserController }

@@ -82,7 +82,19 @@ class UserService{
         }
 
         //return { status: true, success: "Usuário logado com sucesso.", name: user }
-        return { status: true, success: "Usuário logado com sucesso.", name: user.nome }
+        return { status: true, success: "Usuário logado com sucesso.", name: user.nome, email: user.id }
+
+    }
+
+    async buscarUsers(){
+
+        const usersRepository = getCustomRepository(UsersRepositories);
+
+        const usuarios = await usersRepository.createQueryBuilder("users")
+                                            .where("admin = :admin", {admin: true})
+                                            .getMany();
+
+        return usuarios;
 
     }
 

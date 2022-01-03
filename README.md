@@ -71,3 +71,9 @@ npm install react-paginate
 
 npm install @mui/material @emotion/react @emotion/styled
 
+### VARIAVEIS DE AMBIENTE - FRONT-END
+
+NEXT_PUBLIC_CHAVE_API_OpenWeatherMap=<Sua chave>
+
+NEXT_PUBLIC_CHAVE_SENHA_ADM=<Sua chave>
+
