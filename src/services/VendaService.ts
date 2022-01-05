@@ -1,5 +1,6 @@
 import moment from "moment";
-import { getCustomRepository } from "typeorm";
+import { getConnection, getCustomRepository } from "typeorm";
+import { Quantidade } from "../models/Quantidade";
 import { VendaRepositories } from "../repositories/VendaRepositories";
 import { FechamentoService } from "./FechamentoService";
 
@@ -38,7 +39,7 @@ class VendaService{
 
     async salvarVenda(dados: ISalvarVenda){
 
-        const vendaRepositories = getCustomRepository(VendaRepositories);
+        const vendaRepository = getCustomRepository(VendaRepositories);
 
         const fechamentoService = new FechamentoService();
 
@@ -71,32 +72,66 @@ class VendaService{
                 return { error: true, msg: "Error: Você precisa informar qual a modalidade de pagamento."}
             }
 
+            const idFechamento = await fechamentoService.buscarIdFechamento();
         // ------------------------------------------------------------------------------------------------------------------------------------
     
-        const idFechamento = await fechamentoService.buscarIdFechamento();
+        const connection = getConnection();
+        const queryRunner = connection.createQueryRunner();
 
-        // Tabela de Vendas
-        //      id - autoincrement
-        //      idFechamento
-        //      dados.id_user
-        //      dados.valores.desconto
-        //      modalidadeEscolhida
-        //      dados.valores.valortotal
-        //      dataAtual
-        //      dados.obs
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
 
-        // Tabela de itens
-        dados.itens.forEach(ele => {
-            // id - autoincrment
-            // id_venda
-            // ele.id
-            // ele.valor
-            // ele.unidade
-            // dataAtual
-        });
+        try{
+            
+            dados.valores.desconto = dados.valores.desconto == '' ? null : dados.valores.desconto
+            
+            // Tabela de Vendas
+            //      id - autoincrement
+            //      idFechamento
+            //      dados.id_user
+            //      dados.valores.desconto
+            //      modalidadeEscolhida
+            //      dados.valores.valortotal
+            //      dataAtual
+            //      dados.obs
+            await queryRunner.manager.query(`insert into vendas (id_fechamento, id_user, desconto, modalidade, valor_total, data, obs) values (${idFechamento}, ${dados.id_user}, ${dados.valores.desconto}, '${modalidadeEscolhida}', ${dados.valores.valortotal}, '${dataAtual}', '${dados.obs}')`);
 
-        
-        return { error: false, msg: "Sucesso!"};
+            const idInserido = await queryRunner.manager.query("select max(id) as id_venda from vendas");
+
+            var arrayUpdateQuantidade = [];
+
+            await Promise.all(dados.itens.map(async (ele) => {
+
+                // Tabela de itens
+                //      id - autoincrment
+                //      id_venda
+                //      ele.id
+                //      ele.valor
+                //      ele.unidade
+                //      dataAtual
+                await queryRunner.manager.query(`insert into itens (id_venda, id_produto, valor_atual, unidade, data) values (${idInserido[0].id_venda}, ${ele.id}, ${ele.valor}, ${ele.unidade}, '${dataAtual}')`);
+
+                const qtdProduto = await queryRunner.manager.query(`select quantidade from quantidades where id_produto = ${ele.id}`);
+                var quantidadeNova = qtdProduto[0].quantidade - ele.unidade;
+
+                arrayUpdateQuantidade.push({id_produto: ele.id, qtd: quantidadeNova});
+
+            }));
+            
+            arrayUpdateQuantidade.forEach(async item => {
+                await queryRunner.manager.query(`update quantidades set quantidade = ${item.qtd} where id_produto = ${item.id_produto}`);
+            })
+            
+            await queryRunner.commitTransaction();
+
+        }catch(err){
+            await queryRunner.rollbackTransaction();
+            return { error: true, msg: "Ocorreu um erro ao tentar realizar a venda. Favor entrar em contato com o administrador do sistema. Desculpe!"};
+        }finally {
+            await queryRunner.release();
+        }
+
+        return { error: false, msg: "Venda realizada com sucesso!"};
     }
 
     async verItensDuplicados(dados: ISalvarVenda){
