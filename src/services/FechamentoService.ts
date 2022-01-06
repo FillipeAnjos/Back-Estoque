@@ -1,6 +1,7 @@
 import { getCustomRepository } from "typeorm";
 import { FechamentoRepositories } from "../repositories/FechamentoRepositories";
 import moment from "moment";
+import { VendaService } from "./VendaService";
 
 interface ISalvarFechamento{
     valor_total: number;
@@ -142,6 +143,27 @@ class FechamentoService{
         const { id } = idFechamento;
 
         return id;
+    }
+
+    async buscarVendasDia(){
+
+        const fechamentoRepository = getCustomRepository(FechamentoRepositories);
+
+        const fechamentoDia = await fechamentoRepository.createQueryBuilder("fechamentos")
+                                                    .where("status = :status", {status: true})
+                                                    .getOne();
+
+        const { id } = fechamentoDia;
+
+        const vendaService = new VendaService();     
+        
+        const valorVendaDia = vendaService.buscarValorDia(id);
+
+        if(await valorVendaDia == undefined){
+            return { error: true, msg: "Ocorreu um erro. Id não encontrado!"};
+        }
+
+        return { error: false, msg: "Venda do dia somada com sucesso.", valor_total: await valorVendaDia };
     }
 
 }

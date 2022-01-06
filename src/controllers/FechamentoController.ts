@@ -36,6 +36,15 @@ class FechamentoController{
 
     }
 
+    async buscarVendasDia(){
+
+        const fechamentoService = new FechamentoService();
+
+        const fechar = fechamentoService.buscarVendasDia();
+
+        return fechar;
+    }
+
 }
 
 export { FechamentoController }
