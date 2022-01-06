@@ -4,6 +4,7 @@ import { UserController } from './controllers/UserController';
 import { QuantidadeController } from './controllers/QuantidadeController';
 import { FechamentoController } from './controllers/FechamentoController';
 import { VendaController } from './controllers/VendaController';
+import { CategoriaController } from './controllers/CategoriaController';
 
 const router = Router();
 
@@ -12,6 +13,7 @@ const produtoController    = new ProdutoController();
 const quantidadeController = new QuantidadeController();
 const fechamentoController = new FechamentoController();
 const vendaController      = new VendaController();
+const categoriaController  = new CategoriaController();
 
 router.post('/cadastrarUser', async function(req: Request, res: Response) {
     
@@ -207,6 +209,61 @@ router.post('/realizarVenda', async function(req, res){
         return res.status(200).send({ venda });
     }catch(err){
         return res.status(400).send({ error: "Error ao atualizar o fechamento: " + err });
+    }
+
+})
+
+router.get('/buscarVendasDia', async function(req, res){
+
+    try{
+        const fechamento = await fechamentoController.buscarVendasDia();
+        return res.status(200).send({ fechamento });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao buscar as vendas: " + err });
+    }
+
+})
+
+router.post('/cadastrarCategoria', async function(req, res){
+
+    try{
+        const categoria = await categoriaController.cadastrar(req, res);
+        return res.status(200).send({ categoria });
+    }catch(err){
+        return res.status(400).send({ error: "Error cadastrar a categoria: " + err });
+    }
+
+})
+
+router.get('/buscarCategorias', async function(req, res){
+
+    try{
+        const categorias = await categoriaController.buscarCategorias();
+        return res.status(200).send({ categorias });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao buscar as vendas: " + err });
+    }
+
+})
+
+router.get('/listarVendas', async function(req, res){
+
+    try{
+        const vendas = await vendaController.listarVendas();
+        return res.status(200).send({ vendas });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao buscar as vendas: " + err });
+    }
+
+})
+
+router.post('/listarVendas', async function(req, res){
+
+    try{
+        const vendas = await vendaController.listarVendasParam(req, res);
+        return res.status(200).send({ vendas });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao buscar as vendas: " + err });
     }
 
 })

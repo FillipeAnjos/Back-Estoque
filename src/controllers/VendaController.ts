@@ -15,6 +15,28 @@ class VendaController{
         
     }
 
+    async listarVendas() {
+
+        const vendaService = new VendaService();
+
+        const vendas = vendaService.listarVendas();
+
+        return vendas;
+
+    }
+
+    async listarVendasParam(request: Request, response: Response) {
+
+        const { filtro, dados, acao } = request.body.param;
+
+        const vendaService = new VendaService();
+
+        const vendas = vendaService.listarVendasParam({ filtro, dados, acao });
+
+        return vendas;
+
+    }
+
 }
 
 export { VendaController }

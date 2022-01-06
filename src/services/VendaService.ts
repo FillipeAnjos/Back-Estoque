@@ -35,6 +35,12 @@ interface ISalvarVenda{
     obs: string;
 }
 
+interface IListarVendasParam{
+    filtro: string;
+    dados: string;
+    acao: boolean;
+}
+
 class VendaService{
 
     async salvarVenda(dados: ISalvarVenda){
@@ -114,12 +120,13 @@ class VendaService{
                 const qtdProduto = await queryRunner.manager.query(`select quantidade from quantidades where id_produto = ${ele.id}`);
                 var quantidadeNova = qtdProduto[0].quantidade - ele.unidade;
 
-                arrayUpdateQuantidade.push({id_produto: ele.id, qtd: quantidadeNova});
+                arrayUpdateQuantidade.push({id_produto: ele.id, qtd: quantidadeNova, qtd_saida: ele.unidade, valor: ele.valor});
 
             }));
             
             arrayUpdateQuantidade.forEach(async item => {
                 await queryRunner.manager.query(`update quantidades set quantidade = ${item.qtd} where id_produto = ${item.id_produto}`);
+                await queryRunner.manager.query(`insert into estoques (id_produto, entrada, saida, saldo, valor_atual, acao) values (${item.id_produto}, null, ${item.qtd_saida}, ${item.qtd}, ${item.valor}, 'Venda')`);
             })
             
             await queryRunner.commitTransaction();
@@ -152,6 +159,63 @@ class VendaService{
         if(itensIguais != 0){
             return true;
         }
+
+    }
+
+    async buscarValorDia(idFechamento = null){
+
+        if(idFechamento == null){
+            return undefined;
+        }
+
+        const vendaRepository = getCustomRepository(VendaRepositories);
+        
+        const buscarDadosVenda = await vendaRepository.createQueryBuilder("vendas")
+                                                .where("id_fechamento = :id", {id: idFechamento})
+                                                .getMany();
+
+        var valorSomado = null;                                                
+        buscarDadosVenda.forEach((ele, index) => {
+            index == 0 ? valorSomado = ele.valor_total : valorSomado += ele.valor_total;
+        });
+
+        return valorSomado;
+
+    }
+
+    async listarVendas(){
+
+        const vendaRepository = getCustomRepository(VendaRepositories);
+
+        const vendas = await vendaRepository.createQueryBuilder("vendas").getMany();
+
+        return vendas;
+
+    }
+
+    async listarVendasParam(param: IListarVendasParam){
+
+        var filtro = parseInt(param.filtro);
+        var dados  = param.dados;
+
+        const vendaRepository = getCustomRepository(VendaRepositories);
+
+        let dadosVendas = null;
+        let queryInicial = 'select * from vendas';
+
+        if(filtro == 1){
+            dadosVendas = `${queryInicial} where data = '${dados}'`;
+        }else if(filtro == 2){
+            dadosVendas = `${queryInicial} where modalidade like '${dados}%'`;
+        }else if(filtro == 3){
+            dadosVendas = `${queryInicial} where CAST(valor_total AS TEXT) like '${dados}%'`;
+        }else{
+            dadosVendas = `${queryInicial}`;
+        }
+
+        var filtrarVendas = await vendaRepository.query(dadosVendas);
+
+        return filtrarVendas;
 
     }
 
