@@ -153,6 +153,10 @@ class FechamentoService{
                                                     .where("status = :status", {status: true})
                                                     .getOne();
 
+        if(fechamentoDia == undefined){
+            return false;
+        }
+
         const { id } = fechamentoDia;
 
         const vendaService = new VendaService();     
@@ -160,7 +164,7 @@ class FechamentoService{
         const valorVendaDia = vendaService.buscarValorDia(id);
 
         if(await valorVendaDia == undefined){
-            return { error: true, msg: "Ocorreu um erro. Id não encontrado!"};
+            return false;
         }
 
         return { error: false, msg: "Venda do dia somada com sucesso.", valor_total: await valorVendaDia };
