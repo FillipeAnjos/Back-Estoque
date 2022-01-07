@@ -98,6 +98,16 @@ class UserService{
 
     }
 
+    async buscarUltimosUsers(){
+
+        const usersRepository = getCustomRepository(UsersRepositories);
+
+        const usuarios = await usersRepository.query(`select * from users order by id desc limit 5`);
+
+        return usuarios;
+
+    }
+
 }
 
 export { UserService }

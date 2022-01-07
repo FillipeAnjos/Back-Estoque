@@ -38,6 +38,16 @@ class UserController{
 
     }
 
+    async buscarUltimosUsers(){
+
+        const userService = new UserService();
+
+        const user = userService.buscarUltimosUsers();
+
+        return user;
+
+    }
+
 }
 
 export { UserController }

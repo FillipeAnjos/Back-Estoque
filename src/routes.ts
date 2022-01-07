@@ -202,6 +202,17 @@ router.get('/buscarUsers', async function(req, res){
 
 })
 
+router.get('/buscarUltimosUsers', async function(req, res){
+
+    try{
+        const usuarios = await userController.buscarUltimosUsers();
+        return res.status(200).send({ usuarios });
+    }catch(err){
+        return res.status(400).send({ error: "Erro ao buscar os usuarios: " + err });
+    }
+
+})
+
 router.post('/realizarVenda', async function(req, res){
 
     try{
