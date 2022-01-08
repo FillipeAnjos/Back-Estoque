@@ -5,6 +5,7 @@ import { QuantidadeController } from './controllers/QuantidadeController';
 import { FechamentoController } from './controllers/FechamentoController';
 import { VendaController } from './controllers/VendaController';
 import { CategoriaController } from './controllers/CategoriaController';
+import { ClienteController } from './controllers/ClienteController';
 
 const router = Router();
 
@@ -14,6 +15,7 @@ const quantidadeController = new QuantidadeController();
 const fechamentoController = new FechamentoController();
 const vendaController      = new VendaController();
 const categoriaController  = new CategoriaController();
+const clienteController  = new ClienteController();
 
 router.post('/cadastrarUser', async function(req: Request, res: Response) {
     
@@ -275,6 +277,17 @@ router.post('/listarVendas', async function(req, res){
         return res.status(200).send({ vendas });
     }catch(err){
         return res.status(400).send({ error: "Error ao buscar as vendas: " + err });
+    }
+
+})
+
+router.post('/cadastrarCliente', async function(req, res){
+
+    try{
+        const cliente = await clienteController.cadastrarCliente(req, res);
+        return res.status(200).send({ cliente });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao cadastrar o cliente: " + err });
     }
 
 })
