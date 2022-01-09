@@ -292,6 +292,50 @@ router.post('/cadastrarCliente', async function(req, res){
 
 })
 
+router.get('/listarClientes', async function(req, res){
+
+    try{
+        const clientes = await clienteController.listarClientes();
+        return res.status(200).send({ clientes });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao buscar os clientes: " + err });
+    }
+
+})
+
+router.post('/listarClientes', async function(req, res){
+
+    try{
+        const clientes = await clienteController.listarClientesParam(req, res);
+        return res.status(200).send({ clientes });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao buscar os clientes: " + err });
+    }
+
+})
+
+router.post('/excluirCliente', async function(req, res){
+
+    try{
+        const cliente = await clienteController.excluirCliente(req, res);
+        return res.status(200).send({ cliente });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao excluir o cliente: " + err });
+    }
+
+})
+
+router.post('/editarCliente', async function(req, res){
+
+    try{
+        const cliente = await clienteController.editarCliente(req, res);
+        return res.status(200).send({ cliente });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao editar o cliente: " + err });
+    }
+
+})
+
 router.get('/', function(req, res){
     console.log("Sem Front End");
 });
