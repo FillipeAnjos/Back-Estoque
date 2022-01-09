@@ -15,6 +15,52 @@ class ClienteController{
         
     }
 
+    async listarClientes() {
+
+        const clienteService = new ClienteService();
+
+        const clientes = clienteService.listarClientes();
+
+        return clientes;
+        
+    }
+
+    async listarClientesParam(request: Request, response: Response) {
+
+        const { filtro, dados } = request.body.param;
+
+        const clienteService = new ClienteService();
+
+        const clientes = clienteService.listarClientesParam({ filtro, dados });
+
+        return clientes;
+        
+    }
+
+    async excluirCliente(request: Request, response: Response) {
+
+        const { id } = request.body;
+
+        const clienteService = new ClienteService();
+
+        const excluirCliente = clienteService.excluirCliente({ id });
+
+        return excluirCliente;
+
+    }
+
+    async editarCliente(request: Request, response: Response) {
+
+        const { id, nome, cpf, nascimento, genero, civil, uf, rg, endereco, numero, tel, cel, email } = request.body.param;
+
+        const clienteService = new ClienteService();
+
+        const editarCliente = clienteService.editarCliente({ id, nome, cpf, nascimento, genero, civil, uf, rg, endereco, numero, tel, cel, email });
+
+        return editarCliente;
+
+    }
+
 }
 
 export { ClienteController }
