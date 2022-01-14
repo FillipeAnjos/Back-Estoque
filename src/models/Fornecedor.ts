@@ -1,31 +1,25 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity("enderecos")
-class Endereco {
+@Entity("fornecedores")
+class Fornecedor {
 
     @PrimaryGeneratedColumn()
     readonly id: number;
 
     @Column()
-    id_cliente: number;
+    nome: string;
 
     @Column()
-    id_fornecedor: number;
+    email: string;
 
     @Column()
-    rua: string;
+    cnpj: string;
 
     @Column()
-    numero: number;
-
+    razao: string;
+    
     @Column()
-    bairro: string;
-
-    @Column()
-    municipio: string;
-
-    @Column()
-    uf: string;
+    falarcom: string;
 
     @CreateDateColumn()
     created_at: Date;
@@ -41,4 +35,4 @@ class Endereco {
 
 }
 
-export { Endereco };
+export { Fornecedor };

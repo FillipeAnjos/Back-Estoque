@@ -88,7 +88,22 @@ class ClienteService{
 
         const clienteRepository = getCustomRepository(ClienteRepositories);
 
-        const clientes = await clienteRepository.query(`select * from clientes c inner join enderecos e on c.id = e.id_cliente inner join telefones t on t.id_cliente = c.id`);
+        const clientes = await clienteRepository.query(`select c.id as id,
+        c.nome as nome,
+        c.email as email,
+        c.cpf as cpf,
+        c.nascimento as nascimento,
+        c.genero as genero,
+        c.civil as civil,
+        c.rg as rg,
+        e.rua as rua,
+        e.numero as numero,
+        e.bairro as bairro,
+        e.municipio as municipio,
+        e.uf as uf,
+        t.telefone as telefone,
+        t.celular as celular,
+        t.celular2 as celular2 from clientes c inner join enderecos e on c.id = e.id_cliente inner join telefones t on t.id_cliente = c.id`);
 
         return clientes;
 
@@ -102,7 +117,7 @@ class ClienteService{
         const clienteRepository = getCustomRepository(ClienteRepositories);
 
         let dadosClientes = null;
-        let queryInicial = 'select * from clientes c inner join enderecos e on c.id = e.id_cliente inner join telefones t on t.id_cliente = c.id where c.id';
+        let queryInicial = 'select * from clientes c inner join enderecos e on c.id = e.id_cliente inner join telefones t on t.id_cliente = c.id';
 
         if(filtro == 1){
             dadosClientes = `${queryInicial} where c.nome like '${dados}%'`;
@@ -113,6 +128,8 @@ class ClienteService{
         }else{
             dadosClientes = `${queryInicial}`;
         }
+
+        //console.log(dadosClientes);
 
         var filtrarClientes = await clienteRepository.query(dadosClientes);
 
