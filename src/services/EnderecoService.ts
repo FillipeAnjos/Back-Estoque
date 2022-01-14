@@ -3,7 +3,8 @@ import { getConnection, getCustomRepository } from "typeorm";
 import { EnderecoRepositories } from "../repositories/EnderecoRepositories";
 
 interface IEnderecoSalvar{
-    id_cliente: number;
+    id_cliente?: number;
+    id_fornecedor?: number;
     endereco: string;
     numero: number;
     bairro?: string;
@@ -12,7 +13,8 @@ interface IEnderecoSalvar{
 }
 
 interface IEnderecoUpdate{
-    id_cliente: number;
+    id_cliente?: number;
+    id_fornecedor?: number;
     rua: string;
     numero: number;
     bairro?: string;
@@ -29,6 +31,24 @@ class EnderecoService{
         const enderecoRepository = getCustomRepository(EnderecoRepositories);
         
         const enderecoCreate = enderecoRepository.create({ id_cliente, rua: endereco, numero, bairro, municipio, uf });
+
+        const salvarEndereco = await enderecoRepository.save(enderecoCreate);
+
+        if(!salvarEndereco){
+            return false;
+        }
+
+        return true;
+
+    }
+
+    async cadastrarEnderecoFornecedor(enderecoSalvar: IEnderecoSalvar){
+
+        const { id_fornecedor, endereco, numero, bairro, municipio, uf } = enderecoSalvar;
+
+        const enderecoRepository = getCustomRepository(EnderecoRepositories);
+        
+        const enderecoCreate = enderecoRepository.create({ id_fornecedor, rua: endereco, numero, bairro, municipio, uf });
 
         const salvarEndereco = await enderecoRepository.save(enderecoCreate);
 

@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreateTelefone1641663956206 implements MigrationInterface {
+export class CreateTelefones1642158216192 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -16,7 +16,13 @@ export class CreateTelefone1641663956206 implements MigrationInterface {
                     },
                     {
                         name: "id_cliente",
-                        type: "int"
+                        type: "int",
+                        isNullable: true
+                    },
+                    {
+                        name: "id_fornecedor",
+                        type: "int",
+                        isNullable: true
                     },
                     {
                         name: "telefone",
@@ -49,6 +55,14 @@ export class CreateTelefone1641663956206 implements MigrationInterface {
                         referencedTableName: "clientes",
                         referencedColumnNames: ["id"],
                         columnNames: ["id_cliente"],
+                        onDelete: "SET NULL",
+                        onUpdate: "SET NULL"
+                    },
+                    {
+                        name: "FKFornecedores",
+                        referencedTableName: "fornecedores",
+                        referencedColumnNames: ["id"],
+                        columnNames: ["id_fornecedor"],
                         onDelete: "SET NULL",
                         onUpdate: "SET NULL"
                     }

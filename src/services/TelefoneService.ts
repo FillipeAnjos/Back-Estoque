@@ -3,14 +3,16 @@ import { getConnection, getCustomRepository } from "typeorm";
 import { TelefoneRepositories } from "../repositories/TelefoneRepositories";
 
 interface ITelefoneSalvar{
-    id_cliente: number;
+    id_cliente?: number;
+    id_fornecedor?: number;
     telefone?: string;
     celular: string;
     celular2?: string;
 }
 
 interface ITelefoneUpdate{
-    id_cliente: number; 
+    id_cliente?: number;
+    id_fornecedor?: number; 
     telefone: string;
     celular: string;
 }
@@ -24,6 +26,24 @@ class TelefoneService{
         const telefoneRepository = getCustomRepository(TelefoneRepositories);
         
         const telefoneCreate = telefoneRepository.create({ id_cliente, telefone, celular, celular2 });
+
+        const salvarTelefone = await telefoneRepository.save(telefoneCreate);
+
+        if(!salvarTelefone){
+            return false;
+        }
+
+        return true;
+
+    }
+
+    async cadastrarTelefoneFornecedor(telefoneSalvar: ITelefoneSalvar){
+
+        const { id_fornecedor, telefone, celular, celular2 } = telefoneSalvar;
+
+        const telefoneRepository = getCustomRepository(TelefoneRepositories);
+        
+        const telefoneCreate = telefoneRepository.create({ id_fornecedor, telefone, celular, celular2 });
 
         const salvarTelefone = await telefoneRepository.save(telefoneCreate);
 

@@ -10,6 +10,9 @@ class Telefone {
     id_cliente: number;
 
     @Column()
+    id_fornecedor: number;
+
+    @Column()
     telefone: string;
 
     @Column()

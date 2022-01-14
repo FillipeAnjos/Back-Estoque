@@ -6,6 +6,7 @@ import { FechamentoController } from './controllers/FechamentoController';
 import { VendaController } from './controllers/VendaController';
 import { CategoriaController } from './controllers/CategoriaController';
 import { ClienteController } from './controllers/ClienteController';
+import { FornecedorController } from './controllers/FornecedorController';
 
 const router = Router();
 
@@ -15,7 +16,8 @@ const quantidadeController = new QuantidadeController();
 const fechamentoController = new FechamentoController();
 const vendaController      = new VendaController();
 const categoriaController  = new CategoriaController();
-const clienteController  = new ClienteController();
+const clienteController    = new ClienteController();
+const fornecedorController = new FornecedorController();
 
 router.post('/cadastrarUser', async function(req: Request, res: Response) {
     
@@ -332,6 +334,17 @@ router.post('/editarCliente', async function(req, res){
         return res.status(200).send({ cliente });
     }catch(err){
         return res.status(400).send({ error: "Error ao editar o cliente: " + err });
+    }
+
+})
+
+router.post('/cadastrarFornecedor', async function(req, res){
+
+    try{
+        const fornecedor = await fornecedorController.cadastrarFornecedor(req, res);
+        return res.status(200).send({ fornecedor });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao cadastrar o fornecedor: " + err });
     }
 
 })
