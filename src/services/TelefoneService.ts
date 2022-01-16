@@ -75,6 +75,26 @@ class TelefoneService{
 
     }
 
+    async editarTelefoneFornecedor(updateSalvar: ITelefoneUpdate){
+
+        const { id_fornecedor, telefone, celular } = updateSalvar;
+
+        const telefoneRepository = getCustomRepository(TelefoneRepositories); 
+
+        const updateTelefone = telefoneRepository.createQueryBuilder("telefones")
+                                                    .update("telefones")
+                                                    .set({ id_fornecedor: id_fornecedor, telefone: telefone, celular: celular })
+                                                    .where("id_fornecedor = :id_fornecedor", {id_fornecedor: id_fornecedor})
+                                                    .execute();
+
+        if(!updateTelefone){
+            return false
+        }
+
+        return true;
+
+    }
+
 }
 
 export { TelefoneService }

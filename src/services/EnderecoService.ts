@@ -80,6 +80,26 @@ class EnderecoService{
 
     }
 
+    async editarEnderecoFornecedor(updateSalvar: IEnderecoUpdate){
+
+        const { id_fornecedor, rua, numero, uf } = updateSalvar;
+
+        const enderecoRepository = getCustomRepository(EnderecoRepositories); 
+
+        const updateEnderecos = enderecoRepository.createQueryBuilder("enderecos")
+                                                    .update("enderecos")
+                                                    .set({ id_fornecedor: id_fornecedor, rua: rua, numero: numero, uf: uf })
+                                                    .where("id_fornecedor = :id_fornecedor", {id_fornecedor: id_fornecedor})
+                                                    .execute();
+
+        if(!updateEnderecos){
+            return false
+        }
+
+        return true;
+
+    }
+
 }
 
 export { EnderecoService }

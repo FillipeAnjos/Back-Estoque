@@ -349,6 +349,52 @@ router.post('/cadastrarFornecedor', async function(req, res){
 
 })
 
+router.get('/listarFornecedores', async function(req, res){
+
+    try{
+        const fornecedores = await fornecedorController.listarFornecedores();
+        return res.status(200).send({ fornecedores });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao buscar os fornecedores: " + err });
+    }
+
+})
+
+router.post('/listarFornecedores', async function(req, res){
+
+    try{
+        const fornecedores = await fornecedorController.listarFornecedoresParam(req, res);
+        return res.status(200).send({ fornecedores });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao buscar os fornecedores: " + err });
+    }
+
+})
+
+router.post('/excluirfornecedor', async function(req, res){
+
+    try{
+        const fornecedor = await fornecedorController.excluirFornecedor(req, res);
+        return res.status(200).send({ fornecedor });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao excluir o fornecedor: " + err });
+    }
+
+})
+
+router.post('/editarFornecedor', async function(req, res){
+
+    try{
+        const fornecedor = await fornecedorController.editarFornecedor(req, res);
+        return res.status(200).send({ fornecedor });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao editar o cliente: " + err });
+    }
+
+})
+
+
+
 router.get('/', function(req, res){
     console.log("Sem Front End");
 });
