@@ -41,6 +41,16 @@ interface IListarVendasParam{
     acao: boolean;
 }
 
+interface IBuscarDadosRelatorio{ 
+    filtro: string;
+    dados: string;
+    dadosdataini: string;
+    dadosdatafim: string; 
+    ordenacao: string;
+    ordenacaoordem: string;
+}
+
+
 class VendaService{
 
     async salvarVenda(dados: ISalvarVenda){
@@ -212,6 +222,54 @@ class VendaService{
         }else{
             dadosVendas = `${queryInicial}`;
         }
+
+        var filtrarVendas = await vendaRepository.query(dadosVendas);
+
+        return filtrarVendas;
+
+    }
+
+    async relatorioVendas(param: IBuscarDadosRelatorio){
+
+        var filtro         = parseInt(param.filtro);
+        var dados          = param.dados;
+        var dataIni        = param.dadosdataini;
+        var dataFim        = param.dadosdatafim;
+        var ordenacao      = param.ordenacao;
+        var ordenacaoordem = param.ordenacaoordem;
+
+        const vendaRepository = getCustomRepository(VendaRepositories);
+
+        let dadosVendas = null;
+        let queryInicial = 'select * from vendas';
+
+        if(filtro != 3){
+            if(filtro == 1){
+                dadosVendas = dados != '' ? `${queryInicial} where id = '${dados}'` : queryInicial
+            }else if(filtro == 2){
+                dadosVendas = `${queryInicial} where modalidade like '${dados}%'`;
+            }else if(filtro == 4){
+                dadosVendas = `${queryInicial} where CAST(valor_total AS TEXT) like '${dados}%'`;
+            }else if(filtro == 5){
+                dadosVendas = `${queryInicial} where CAST(desconto AS TEXT) like '${dados}%'`;
+            }else{
+                dadosVendas = `${queryInicial}`;
+            }
+        }else{
+            if(filtro == 3){
+                if(dataIni == '' || dataFim == ''){
+                    dadosVendas = queryInicial;
+                }else{
+                    dadosVendas = `${queryInicial} where data BETWEEN '${dataIni}' and '${dataFim}'`;
+                }
+            }else{
+                dadosVendas = `${queryInicial}`;
+            }
+        }
+
+        dadosVendas = `${dadosVendas} order by ${ordenacao} ${ordenacaoordem}`;
+
+        //console.log(dadosVendas);
 
         var filtrarVendas = await vendaRepository.query(dadosVendas);
 
