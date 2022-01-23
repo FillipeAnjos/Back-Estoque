@@ -37,6 +37,19 @@ class VendaController{
 
     }
 
+    async relatorioVendas(request: Request, response: Response) {
+
+        const { filtro, dados, dadosdataini, dadosdatafim, ordenacao, ordenacaoordem } = request.body.param;
+
+        const vendaService = new VendaService();
+
+        const vendas = vendaService.relatorioVendas({ filtro, dados, dadosdataini, dadosdatafim, ordenacao, ordenacaoordem });
+
+        return vendas;
+
+    }
+
+
 }
 
 export { VendaController }
