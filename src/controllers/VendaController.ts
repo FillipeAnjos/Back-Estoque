@@ -49,6 +49,18 @@ class VendaController{
 
     }
 
+    async relatorioFechamentos(request: Request, response: Response) {
+
+        const { filtro, dados, dadosdataini, dadosdatafim, ordenacao, ordenacaoordem } = request.body.param;
+
+        const vendaService = new VendaService();
+
+        const vendas = vendaService.relatorioFechamentos({ filtro, dados, dadosdataini, dadosdatafim, ordenacao, ordenacaoordem });
+
+        return vendas;
+
+    }
+
 
 }
 
