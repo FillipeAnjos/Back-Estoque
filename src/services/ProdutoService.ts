@@ -82,7 +82,16 @@ class ProdutoService{
                                 .getMany();*/
 
         const listarProdutos = await produtoRepository
-                                .query(`select * from produtos as p inner join quantidades as q on p.id = q.id_produto where p.status = ${ativos} order by p.id ASC`);
+                                .query(`select p.id as id,
+                                p.produto as produto,
+                                p.categoria as categoria,
+                                p.descricao as descricao,
+                                p.cor as cor,
+                                p.tamanho as tamanho,
+                                p.obs as obs,
+                                p.valor as valor,
+                                p."status" as status,
+                                q.quantidade as quantidade from produtos as p inner join quantidades as q on p.id = q.id_produto where p.status = ${ativos} order by p.id ASC`);
 
         return listarProdutos;
 
@@ -93,7 +102,18 @@ class ProdutoService{
         let produtoRepository = getCustomRepository(ProdutoRepositories);
 
         let dadosProdutos = null;
-        let queryInicial = 'select * from produtos as p inner join quantidades as q on p.id = q.id_produto';
+        let queryInicial = `select 
+        p.id as id,
+        p.produto as produto,
+        p.categoria as categoria,
+        p.descricao as descricao,
+        p.cor as cor,
+        p.tamanho as tamanho,
+        p.obs as obs,
+        p.valor as valor,
+        p."status" as status,
+        q.quantidade as quantidade
+         from produtos as p inner join quantidades as q on p.id = q.id_produto`;
 
         if(filtro == 1){
             dadosProdutos = `${queryInicial} where p.produto like '${dados}%' `;
@@ -118,7 +138,16 @@ class ProdutoService{
         let produtoRepository = getCustomRepository(ProdutoRepositories);
 
         let dadosProdutos = null;
-        let queryInicial = 'select * from produtos as p inner join quantidades as q on p.id = q.id_produto';
+        let queryInicial = `select p.id as id,
+        p.produto as produto,
+        p.categoria as categoria,
+        p.descricao as descricao,
+        p.cor as cor,
+        p.tamanho as tamanho,
+        p.obs as obs,
+        p.valor as valor,
+        p."status" as status,
+        q.quantidade as quantidade from produtos as p inner join quantidades as q on p.id = q.id_produto`;
 
         if(filtro == 1){
             dadosProdutos = `${queryInicial} where p.produto like '${dados}%' and p.status = ${acao}`;
@@ -148,7 +177,18 @@ class ProdutoService{
                                 .getMany();*/
 
         const listarProdutos = await produtoRepository
-                                .query(`select * from produtos as p inner join quantidades as q on p.id = q.id_produto order by p.id ASC`);
+                                .query(`select 
+                                p.id as id,
+                                p.produto as produto,
+                                p.categoria as categoria,
+                                p.descricao as descricao,
+                                p.cor as cor,
+                                p.tamanho as tamanho,
+                                p.obs as obs,
+                                p.valor as valor,
+                                p."status" as status,
+                                q.quantidade as quantidade
+                                 from produtos as p inner join quantidades as q on p.id = q.id_produto order by p.id ASC`);
 
         return listarProdutos;
 

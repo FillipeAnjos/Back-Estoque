@@ -404,6 +404,17 @@ router.post('/relatorioVendas', async function(req, res){
 
 })
 
+router.post('/relatorioFechamentos', async function(req, res){
+
+    try{
+        const vendas = await vendaController.relatorioFechamentos(req, res);
+        return res.status(200).send({ vendas });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao atualizar o fechamento: " + err });
+    }
+
+})
+
 
 
 router.get('/', function(req, res){
