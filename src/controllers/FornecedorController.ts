@@ -61,6 +61,18 @@ class FornecedorController{
 
     }
 
+    async relatorioFornecedores(request: Request, response: Response) {
+
+        const { filtro, dados, ordenacao, ordenacaoordem } = request.body.param;
+
+        const fornecedorService = new FornecedorService();
+
+        const fornecedores = fornecedorService.relatorioFornecedores({ filtro, dados, ordenacao, ordenacaoordem });
+
+        return fornecedores;
+
+    }
+
 }
 
 export { FornecedorController }
