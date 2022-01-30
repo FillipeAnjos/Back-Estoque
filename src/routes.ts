@@ -399,7 +399,7 @@ router.post('/relatorioVendas', async function(req, res){
         const vendas = await vendaController.relatorioVendas(req, res);
         return res.status(200).send({ vendas });
     }catch(err){
-        return res.status(400).send({ error: "Error ao atualizar o fechamento: " + err });
+        return res.status(400).send({ error: "Error ao gerar o relatório de vendas: " + err });
     }
 
 })
@@ -410,7 +410,18 @@ router.post('/relatorioFechamentos', async function(req, res){
         const vendas = await vendaController.relatorioFechamentos(req, res);
         return res.status(200).send({ vendas });
     }catch(err){
-        return res.status(400).send({ error: "Error ao atualizar o fechamento: " + err });
+        return res.status(400).send({ error: "Error ao gerar o relatório de fechamento: " + err });
+    }
+
+})
+
+router.post('/relatorioProdutos', async function(req, res){
+
+    try{
+        const produtos = await produtoController.relatorioProdutos(req, res);
+        return res.status(200).send({ produtos });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao gerar o relatório de produtos: " + err });
     }
 
 })

@@ -97,6 +97,18 @@ class ProdutoController{
 
     }
 
+    async relatorioProdutos(request: Request, response: Response) {
+
+        const { filtro, dados, ordenacao, ordenacaoordem } = request.body.param;
+
+        const produtoService = new ProdutoService();
+
+        const produtos = produtoService.relatorioProdutos({ filtro, dados, ordenacao, ordenacaoordem });
+
+        return produtos;
+
+    }
+
 }
 
 export { ProdutoController }
