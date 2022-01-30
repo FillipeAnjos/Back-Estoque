@@ -16,6 +16,13 @@ interface IProdutoRequest{
     status: boolean;
 }
 
+interface IBuscarDadosRelatorio{ 
+    filtro: string;
+    dados: string;
+    ordenacao: string;
+    ordenacaoordem: string;
+}
+
 class ProdutoService{
 
     async buscarCodigo(){
@@ -238,6 +245,61 @@ class ProdutoService{
         var produtosListados = await this.listarProdutos(status);
 
         return { success: "Produto atualizado com sucesso.", prod: produtosListados };
+
+    }
+
+    async relatorioProdutos(param: IBuscarDadosRelatorio){
+        
+        var filtro         = parseInt(param.filtro);
+        var dados          = param.dados;
+        var ordenacao      = param.ordenacao;
+        var ordenacaoordem = param.ordenacaoordem;
+
+        const produtoRepository = getCustomRepository(ProdutoRepositories);
+
+        let dadosProdutos = null;
+        let queryInicial = `select p.id as id,
+        p.produto as produto,
+        p.categoria as categoria,
+        p.descricao as descricao,
+        p.cor as cor,
+        p.tamanho as tamanho,
+        p.obs as obs,
+        p.valor as valor,
+        p."status" as status,
+        q.quantidade as quantidade from produtos p inner join quantidades q on p.id = q.id_produto`;
+
+        if(filtro == 1){
+            dadosProdutos = dados != '' ? `${queryInicial} where id = '${dados}'` : queryInicial
+        }else if(filtro == 2){
+            dadosProdutos = `${queryInicial} where p.produto like '${dados}%'`;
+        }else if(filtro == 3){
+            dadosProdutos = `${queryInicial} where p.categoria like '${dados}%'`;
+        }else if(filtro == 4){
+            dadosProdutos = `${queryInicial} where p.descricao like '${dados}%'`;
+        }else if(filtro == 5){
+            dadosProdutos = `${queryInicial} where p.cor like '${dados}%'`;
+        }else if(filtro == 6){
+            dadosProdutos = `${queryInicial} where p.obs like '${dados}%'`;
+        }else if(filtro == 7){
+            dadosProdutos = `${queryInicial} where CAST(p.valor AS TEXT) like '${dados}%'`;
+        }else if(filtro == 8){
+            dadosProdutos = `${queryInicial} where p.status = true`;
+        }else if(filtro == 9){
+            dadosProdutos = `${queryInicial} where p.status = false`;
+        }else if(filtro == 10){
+            dadosProdutos = `${queryInicial} where q.quantidade = '${dados}'`;
+        }else{
+            dadosProdutos = `${queryInicial}`;
+        }
+
+        dadosProdutos = `${dadosProdutos} order by ${ordenacao} ${ordenacaoordem}`;
+
+        //console.log(dadosProdutos);
+
+        var filtrarProdutos = await produtoRepository.query(dadosProdutos);
+
+        return filtrarProdutos;
 
     }
 
