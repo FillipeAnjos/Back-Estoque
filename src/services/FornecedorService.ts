@@ -32,6 +32,13 @@ interface IEditarDadosFornecedor{
     email: string;
 }
 
+interface IBuscarDadosRelatorio{ 
+    filtro: string;
+    dados: string;
+    ordenacao: string;
+    ordenacaoordem: string;
+}
+
 class FornecedorService{
 
     async cadastrarFornecedor(fornecedor: ICadastrarFornecedor){
@@ -195,6 +202,42 @@ class FornecedorService{
         }
 
         return { error: false, msg: "Os dados do fornecedor foram atualizados com sucesso."};
+
+    }
+
+    async relatorioFornecedores(param: IBuscarDadosRelatorio){
+        
+        var filtro         = parseInt(param.filtro);
+        var dados          = param.dados;
+        var ordenacao      = param.ordenacao;
+        var ordenacaoordem = param.ordenacaoordem;
+
+        const fornecedoresRepository = getCustomRepository(FornecedorRepositories);
+
+        let dadosFornecedores = null;
+        let queryInicial = `select * from fornecedores`;
+
+        if(filtro == 1){
+            dadosFornecedores = dados != '' ? `${queryInicial} where id = '${dados}'` : queryInicial
+        }else if(filtro == 2){
+            dadosFornecedores = `${queryInicial} where nome like '${dados}%'`;
+        }else if(filtro == 3){
+            dadosFornecedores = `${queryInicial} where email like '${dados}%'`;
+        }else if(filtro == 4){
+            dadosFornecedores = `${queryInicial} where cnpj like '${dados}%'`;
+        }else if(filtro == 5){
+            dadosFornecedores = `${queryInicial} where razao like '${dados}%'`;
+        }else{
+            dadosFornecedores = `${queryInicial}`;
+        }
+
+        dadosFornecedores = `${dadosFornecedores} order by ${ordenacao} ${ordenacaoordem}`;
+
+        //console.log(dadosFornecedores);
+
+        var filtrarFornecedores = await fornecedoresRepository.query(dadosFornecedores);
+
+        return filtrarFornecedores;
 
     }
     

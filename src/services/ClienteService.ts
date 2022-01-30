@@ -40,6 +40,13 @@ interface IEditarDadosCliente{
     email: string;
 }
 
+interface IBuscarDadosRelatorio{ 
+    filtro: string;
+    dados: string;
+    ordenacao: string;
+    ordenacaoordem: string;
+}
+
 class ClienteService{
 
     async cadastrarCliente(cliente: ICadastrarCliente){
@@ -200,6 +207,46 @@ class ClienteService{
         }
 
         return { error: false, msg: "Os dados do cliente foram atualizados com sucesso."};
+
+    }
+
+    async relatorioClientes(param: IBuscarDadosRelatorio){
+        
+        var filtro         = parseInt(param.filtro);
+        var dados          = param.dados;
+        var ordenacao      = param.ordenacao;
+        var ordenacaoordem = param.ordenacaoordem;
+
+        const clienteRepository = getCustomRepository(ClienteRepositories);
+
+        let dadosClientes = null;
+        let queryInicial = `select * from clientes`;
+
+        if(filtro == 1){
+            dadosClientes = dados != '' ? `${queryInicial} where id = '${dados}'` : queryInicial
+        }else if(filtro == 2){
+            dadosClientes = `${queryInicial} where nome like '${dados}%'`;
+        }else if(filtro == 3){
+            dadosClientes = `${queryInicial} where email like '${dados}%'`;
+        }else if(filtro == 4){
+            dadosClientes = `${queryInicial} where cpf like '${dados}%'`;
+        }else if(filtro == 5){
+            dadosClientes = `${queryInicial} where genero like '${dados}%'`;
+        }else if(filtro == 6){
+            dadosClientes = `${queryInicial} where civil like '${dados}%'`;
+        }else if(filtro == 7){
+            dadosClientes = `${queryInicial} where rg like '${dados}%'`;
+        }else{
+            dadosClientes = `${queryInicial}`;
+        }
+
+        dadosClientes = `${dadosClientes} order by ${ordenacao} ${ordenacaoordem}`;
+
+        //console.log(dadosClientes);
+
+        var filtrarClientes = await clienteRepository.query(dadosClientes);
+
+        return filtrarClientes;
 
     }
 

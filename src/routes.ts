@@ -426,6 +426,28 @@ router.post('/relatorioProdutos', async function(req, res){
 
 })
 
+router.post('/relatorioClientes', async function(req, res){
+
+    try{
+        const clientes = await clienteController.relatorioClientes(req, res);
+        return res.status(200).send({ clientes });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao gerar o relatório de clientes: " + err });
+    }
+
+})
+
+router.post('/relatorioFornecedores', async function(req, res){
+
+    try{
+        const fornecedores = await fornecedorController.relatorioFornecedores(req, res);
+        return res.status(200).send({ fornecedores });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao gerar o relatório de fornecedores: " + err });
+    }
+
+})
+
 
 
 router.get('/', function(req, res){

@@ -61,6 +61,18 @@ class ClienteController{
 
     }
 
+    async relatorioClientes(request: Request, response: Response) {
+
+        const { filtro, dados, ordenacao, ordenacaoordem } = request.body.param;
+
+        const clienteService = new ClienteService();
+
+        const clientes = clienteService.relatorioClientes({ filtro, dados, ordenacao, ordenacaoordem });
+
+        return clientes;
+
+    }
+
 }
 
 export { ClienteController }
