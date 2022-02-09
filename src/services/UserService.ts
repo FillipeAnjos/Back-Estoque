@@ -56,6 +56,22 @@ class UserService{
         return { success: "Usuário criado com sucesso.", usuario };
     }
 
+    async buscarUserLogado(id: number){
+        
+        const userRepository = getCustomRepository(UsersRepositories);
+
+        const user = await userRepository.findOne({id});
+
+        // Verificar se o id existe.
+        if(!user){
+            var error = { status: false, error: "usuário não encontrado." };
+            return error;
+        }
+
+        return user;
+
+    }
+
     async logar({ email, senha }: ILogarUser){
 
         const userRepository = getCustomRepository(UsersRepositories);
@@ -81,8 +97,10 @@ class UserService{
             return error;
         }
 
+        var token = Math.random().toString() + "_" + user.id;//'Token-12345678911';
+
         //return { status: true, success: "Usuário logado com sucesso.", name: user }
-        return { status: true, success: "Usuário logado com sucesso.", name: user.nome, email: user.id }
+        return { status: true, success: "Usuário logado com sucesso.", id: user.id, name: user.nome, email: user.email, token: token }
 
     }
 
