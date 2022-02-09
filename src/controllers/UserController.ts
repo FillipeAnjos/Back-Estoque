@@ -28,6 +28,18 @@ class UserController{
 
     }
 
+    async buscarUserLogado(request: Request, response: Response){
+
+        const id = request.body.param;
+
+        const userService = new UserService();
+
+        const user = userService.buscarUserLogado( id );
+
+        return user;
+
+    }
+
     async buscarUsers(){
 
         const userService = new UserService();

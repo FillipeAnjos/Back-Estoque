@@ -41,6 +41,17 @@ router.post('/login', async function(req, res){
     
 });
 
+router.post('/buscarUserLogado', async function(req, res){
+
+    try{
+        const user = await userController.buscarUserLogado(req, res);
+        return res.status(200).send({ user });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao logar o usuário."} );
+    }
+    
+});
+
 router.post('/buscarCodProd', async function(req, res){
     
     try{
