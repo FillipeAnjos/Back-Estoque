@@ -461,6 +461,7 @@ router.post('/relatorioFornecedores', async function(req, res){
 
 
 
+
 router.get('/', function(req, res){
     console.log("Sem Front End");
 });
