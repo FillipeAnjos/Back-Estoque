@@ -61,6 +61,16 @@ class VendaController{
 
     }
 
+    async buscarGraficoVendas() {
+
+        const vendaService = new VendaService();
+
+        const vendas = vendaService.buscarGraficoVendas();
+
+        return vendas;
+
+    }
+
 
 }
 

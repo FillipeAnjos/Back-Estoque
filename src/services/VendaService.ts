@@ -321,6 +321,29 @@ class VendaService{
 
     }
 
+    async buscarVendasPorMes(interacao: number){
+
+        const vendaRepository = getCustomRepository(VendaRepositories);
+        
+        var anoAtual = new Date().getFullYear();
+
+        var query = `select count(vendas.id) as vendasmes from vendas where EXTRACT(MONTH  from vendas.data) = ${interacao} and EXTRACT(YEAR from vendas.data) = ${anoAtual}`;
+        var vendas = await vendaRepository.query(query);
+
+        return vendas[0].vendasmes;
+    }
+
+    async buscarGraficoVendas(){
+
+        var array = [];
+        for(var i = 1; i <= 12; i++){
+            array.push(await this.buscarVendasPorMes(i));
+        }
+
+        return array
+
+    }
+
 }
 
 export { VendaService }
