@@ -459,6 +459,17 @@ router.post('/relatorioFornecedores', async function(req, res){
 
 })
 
+router.post('/buscarGraficoVendas', async function(req, res){
+
+    try{
+        const vendas = await  vendaController.buscarGraficoVendas();
+        return res.status(200).send({ vendas });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao buscar o grafico das vendas: " + err });
+    }
+
+})
+
 
 
 
