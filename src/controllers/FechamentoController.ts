@@ -45,6 +45,15 @@ class FechamentoController{
         return fechar;
     }
 
+    async listarFechamentos(){
+
+        const fechamentoService = new FechamentoService();
+
+        const fechamentos = fechamentoService.listarFechamentos();
+
+        return fechamentos;
+    }
+
 }
 
 export { FechamentoController }

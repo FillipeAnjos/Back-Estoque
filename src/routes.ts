@@ -470,6 +470,17 @@ router.post('/buscarGraficoVendas', async function(req, res){
 
 })
 
+router.get('/listarFechamentos', async function(req, res){
+
+    try{
+        const fechamentos = await  fechamentoController.listarFechamentos();
+        return res.status(200).send({ fechamentos });
+    }catch(err){
+        return res.status(400).send({ error: "Error ao buscar o grafico dos fechamentos: " + err });
+    }
+
+})
+
 
 
 
