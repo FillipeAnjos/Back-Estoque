@@ -170,6 +170,30 @@ class FechamentoService{
         return { error: false, msg: "Venda do dia somada com sucesso.", valor_total: await valorVendaDia };
     }
 
+    async buscarFechamentosPorMes(interacao: number){
+
+        const fechamentoRepository = getCustomRepository(FechamentoRepositories);
+
+        var anoAtual = new Date().getFullYear();
+
+        var query = `select count(fechamentos.id) as fechamentosmes from fechamentos where EXTRACT(MONTH  from fechamentos.data) = ${interacao} and EXTRACT(YEAR from fechamentos.data) = ${anoAtual}`; 
+        var fechamentos = await fechamentoRepository.query(query);
+
+        return fechamentos[0].fechamentosmes;
+
+    }
+
+    async listarFechamentos(){
+
+        var array = [];
+        for(var i = 1; i <= 12; i++){
+            array.push(await this.buscarFechamentosPorMes(i));
+        }
+
+        return array
+
+    }
+
 }
 
 export { FechamentoService }
