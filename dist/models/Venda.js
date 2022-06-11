@@ -10,57 +10,58 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Venda = void 0;
-const typeorm_1 = require("typeorm");
-let Venda = class Venda {
-    constructor() {
+var typeorm_1 = require("typeorm");
+var Venda = /** @class */ (function () {
+    function Venda() {
         /*if(!this.id){
 
         }*/
     }
-};
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], Venda.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Venda.prototype, "id_fechamento", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Venda.prototype, "id_user", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "float" }),
-    __metadata("design:type", Number)
-], Venda.prototype, "desconto", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Venda.prototype, "modalidade", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "float" }),
-    __metadata("design:type", Number)
-], Venda.prototype, "valor_total", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Date)
-], Venda.prototype, "data", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Venda.prototype, "obs", void 0);
-__decorate([
-    (0, typeorm_1.CreateDateColumn)(),
-    __metadata("design:type", Date)
-], Venda.prototype, "created_at", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", Date)
-], Venda.prototype, "updated_at", void 0);
-Venda = __decorate([
-    (0, typeorm_1.Entity)("vendas"),
-    __metadata("design:paramtypes", [])
-], Venda);
+    __decorate([
+        (0, typeorm_1.PrimaryGeneratedColumn)(),
+        __metadata("design:type", Number)
+    ], Venda.prototype, "id", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], Venda.prototype, "id_fechamento", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], Venda.prototype, "id_user", void 0);
+    __decorate([
+        (0, typeorm_1.Column)({ type: "float" }),
+        __metadata("design:type", Number)
+    ], Venda.prototype, "desconto", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Venda.prototype, "modalidade", void 0);
+    __decorate([
+        (0, typeorm_1.Column)({ type: "float" }),
+        __metadata("design:type", Number)
+    ], Venda.prototype, "valor_total", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Date)
+    ], Venda.prototype, "data", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Venda.prototype, "obs", void 0);
+    __decorate([
+        (0, typeorm_1.CreateDateColumn)(),
+        __metadata("design:type", Date)
+    ], Venda.prototype, "created_at", void 0);
+    __decorate([
+        (0, typeorm_1.UpdateDateColumn)(),
+        __metadata("design:type", Date)
+    ], Venda.prototype, "updated_at", void 0);
+    Venda = __decorate([
+        (0, typeorm_1.Entity)("vendas"),
+        __metadata("design:paramtypes", [])
+    ], Venda);
+    return Venda;
+}());
 exports.Venda = Venda;
 //# sourceMappingURL=Venda.js.map

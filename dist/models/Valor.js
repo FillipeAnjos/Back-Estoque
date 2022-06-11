@@ -10,37 +10,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Valor = void 0;
-const typeorm_1 = require("typeorm");
-let Valor = class Valor {
-    constructor() {
+var typeorm_1 = require("typeorm");
+var Valor = /** @class */ (function () {
+    function Valor() {
         /*if(!this.id){
 
         }*/
     }
-};
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], Valor.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Valor.prototype, "id_produto", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "float" }),
-    __metadata("design:type", Number)
-], Valor.prototype, "valor", void 0);
-__decorate([
-    (0, typeorm_1.CreateDateColumn)(),
-    __metadata("design:type", Date)
-], Valor.prototype, "created_at", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", Date)
-], Valor.prototype, "updated_at", void 0);
-Valor = __decorate([
-    (0, typeorm_1.Entity)("valors"),
-    __metadata("design:paramtypes", [])
-], Valor);
+    __decorate([
+        (0, typeorm_1.PrimaryGeneratedColumn)(),
+        __metadata("design:type", Number)
+    ], Valor.prototype, "id", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], Valor.prototype, "id_produto", void 0);
+    __decorate([
+        (0, typeorm_1.Column)({ type: "float" }),
+        __metadata("design:type", Number)
+    ], Valor.prototype, "valor", void 0);
+    __decorate([
+        (0, typeorm_1.CreateDateColumn)(),
+        __metadata("design:type", Date)
+    ], Valor.prototype, "created_at", void 0);
+    __decorate([
+        (0, typeorm_1.UpdateDateColumn)(),
+        __metadata("design:type", Date)
+    ], Valor.prototype, "updated_at", void 0);
+    Valor = __decorate([
+        (0, typeorm_1.Entity)("valors"),
+        __metadata("design:paramtypes", [])
+    ], Valor);
+    return Valor;
+}());
 exports.Valor = Valor;
 //# sourceMappingURL=Valor.js.map

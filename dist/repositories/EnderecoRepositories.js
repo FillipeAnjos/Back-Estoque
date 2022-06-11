@@ -1,4 +1,19 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,12 +22,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EnderecoRepositories = void 0;
-const typeorm_1 = require("typeorm");
-const Endereco_1 = require("../models/Endereco");
-let EnderecoRepositories = class EnderecoRepositories extends typeorm_1.Repository {
-};
-EnderecoRepositories = __decorate([
-    (0, typeorm_1.EntityRepository)(Endereco_1.Endereco)
-], EnderecoRepositories);
+var typeorm_1 = require("typeorm");
+var Endereco_1 = require("../models/Endereco");
+var EnderecoRepositories = /** @class */ (function (_super) {
+    __extends(EnderecoRepositories, _super);
+    function EnderecoRepositories() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    EnderecoRepositories = __decorate([
+        (0, typeorm_1.EntityRepository)(Endereco_1.Endereco)
+    ], EnderecoRepositories);
+    return EnderecoRepositories;
+}(typeorm_1.Repository));
 exports.EnderecoRepositories = EnderecoRepositories;
 //# sourceMappingURL=EnderecoRepositories.js.map

@@ -10,33 +10,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Categoria = void 0;
-const typeorm_1 = require("typeorm");
-let Categoria = class Categoria {
-    constructor() {
+var typeorm_1 = require("typeorm");
+var Categoria = /** @class */ (function () {
+    function Categoria() {
         /*if(!this.id){
 
         }*/
     }
-};
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], Categoria.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Categoria.prototype, "descricao", void 0);
-__decorate([
-    (0, typeorm_1.CreateDateColumn)(),
-    __metadata("design:type", Date)
-], Categoria.prototype, "created_at", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", Date)
-], Categoria.prototype, "updated_at", void 0);
-Categoria = __decorate([
-    (0, typeorm_1.Entity)("categorias"),
-    __metadata("design:paramtypes", [])
-], Categoria);
+    __decorate([
+        (0, typeorm_1.PrimaryGeneratedColumn)(),
+        __metadata("design:type", Number)
+    ], Categoria.prototype, "id", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Categoria.prototype, "descricao", void 0);
+    __decorate([
+        (0, typeorm_1.CreateDateColumn)(),
+        __metadata("design:type", Date)
+    ], Categoria.prototype, "created_at", void 0);
+    __decorate([
+        (0, typeorm_1.UpdateDateColumn)(),
+        __metadata("design:type", Date)
+    ], Categoria.prototype, "updated_at", void 0);
+    Categoria = __decorate([
+        (0, typeorm_1.Entity)("categorias"),
+        __metadata("design:paramtypes", [])
+    ], Categoria);
+    return Categoria;
+}());
 exports.Categoria = Categoria;
 //# sourceMappingURL=Categoria.js.map

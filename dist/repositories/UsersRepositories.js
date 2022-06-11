@@ -1,4 +1,19 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,12 +22,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersRepositories = void 0;
-const typeorm_1 = require("typeorm");
-const User_1 = require("../models/User");
-let UsersRepositories = class UsersRepositories extends typeorm_1.Repository {
-};
-UsersRepositories = __decorate([
-    (0, typeorm_1.EntityRepository)(User_1.User)
-], UsersRepositories);
+var typeorm_1 = require("typeorm");
+var User_1 = require("../models/User");
+var UsersRepositories = /** @class */ (function (_super) {
+    __extends(UsersRepositories, _super);
+    function UsersRepositories() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    UsersRepositories = __decorate([
+        (0, typeorm_1.EntityRepository)(User_1.User)
+    ], UsersRepositories);
+    return UsersRepositories;
+}(typeorm_1.Repository));
 exports.UsersRepositories = UsersRepositories;
 //# sourceMappingURL=UsersRepositories.js.map
