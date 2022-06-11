@@ -1,20 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.EstoqueService = void 0;
-var typeorm_1 = require("typeorm");
-var EstoqueRepositories_1 = require("../repositories/EstoqueRepositories");
-var EstoqueService = /** @class */ (function () {
-    function EstoqueService() {
-    }
-    EstoqueService.prototype.salvarItemEstoque = function (salvar) {
-        var estoqueRepository = (0, typeorm_1.getCustomRepository)(EstoqueRepositories_1.EstoqueRepositories);
+import { getCustomRepository } from "typeorm";
+import { EstoqueRepositories } from "../repositories/EstoqueRepositories";
+class EstoqueService {
+    salvarItemEstoque(salvar) {
+        const estoqueRepository = getCustomRepository(EstoqueRepositories);
         var salvarEstoque = estoqueRepository.create(salvar);
         var itemEstoque = estoqueRepository.save(salvarEstoque);
         if (!itemEstoque) {
             return { error: "Erro ao salvar item no estoque." };
         }
-    };
-    return EstoqueService;
-}());
-exports.EstoqueService = EstoqueService;
+    }
+}
+export { EstoqueService };
 //# sourceMappingURL=EstoqueService.js.map

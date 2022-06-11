@@ -1,1 +1,1 @@
-{"version":3,"file":"EstoqueController.js","sourceRoot":"","sources":["../../src/controllers/EstoqueController.ts"],"names":[],"mappings":";;;AAKA;IAAA;IAIA,CAAC;IAAD,wBAAC;AAAD,CAAC,AAJD,IAIC;AAEQ,8CAAiB"}
+{"version":3,"file":"EstoqueController.js","sourceRoot":"","sources":["../../src/controllers/EstoqueController.ts"],"names":[],"mappings":"AAKA,MAAM,iBAAiB;CAItB;AAED,OAAO,EAAE,iBAAiB,EAAE,CAAA"}
