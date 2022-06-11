@@ -3,11 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const routes_1 = require("./routes");
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
+var routes_1 = require("./routes");
+var express_1 = __importDefault(require("express"));
+var cors_1 = __importDefault(require("cors"));
 require("reflect-metadata");
-const app = (0, express_1.default)();
+var app = (0, express_1.default)();
 require("./database");
 app.use((0, cors_1.default)());
 /*app.use(function(req, res, next){
@@ -18,6 +18,6 @@ app.use((0, cors_1.default)());
 })*/
 app.use(express_1.default.json());
 app.use(routes_1.router);
-const port = process.env.PORT || 3001;
-app.listen(port, () => console.log("Conectado com sucesso na porta: " + port));
+var port = process.env.PORT || 3001;
+app.listen(port, function () { return console.log("Conectado com sucesso na porta: " + port); });
 //# sourceMappingURL=server.js.map

@@ -10,49 +10,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Telefone = void 0;
-const typeorm_1 = require("typeorm");
-let Telefone = class Telefone {
-    constructor() {
+var typeorm_1 = require("typeorm");
+var Telefone = /** @class */ (function () {
+    function Telefone() {
         /*if(!this.id){
 
         }*/
     }
-};
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], Telefone.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Telefone.prototype, "id_cliente", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Telefone.prototype, "id_fornecedor", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Telefone.prototype, "telefone", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Telefone.prototype, "celular", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Telefone.prototype, "celular2", void 0);
-__decorate([
-    (0, typeorm_1.CreateDateColumn)(),
-    __metadata("design:type", Date)
-], Telefone.prototype, "created_at", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", Date)
-], Telefone.prototype, "updated_at", void 0);
-Telefone = __decorate([
-    (0, typeorm_1.Entity)("telefones"),
-    __metadata("design:paramtypes", [])
-], Telefone);
+    __decorate([
+        (0, typeorm_1.PrimaryGeneratedColumn)(),
+        __metadata("design:type", Number)
+    ], Telefone.prototype, "id", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], Telefone.prototype, "id_cliente", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], Telefone.prototype, "id_fornecedor", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Telefone.prototype, "telefone", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Telefone.prototype, "celular", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Telefone.prototype, "celular2", void 0);
+    __decorate([
+        (0, typeorm_1.CreateDateColumn)(),
+        __metadata("design:type", Date)
+    ], Telefone.prototype, "created_at", void 0);
+    __decorate([
+        (0, typeorm_1.UpdateDateColumn)(),
+        __metadata("design:type", Date)
+    ], Telefone.prototype, "updated_at", void 0);
+    Telefone = __decorate([
+        (0, typeorm_1.Entity)("telefones"),
+        __metadata("design:paramtypes", [])
+    ], Telefone);
+    return Telefone;
+}());
 exports.Telefone = Telefone;
 //# sourceMappingURL=Telefone.js.map

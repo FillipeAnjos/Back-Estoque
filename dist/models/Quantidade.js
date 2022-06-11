@@ -10,37 +10,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Quantidade = void 0;
-const typeorm_1 = require("typeorm");
-let Quantidade = class Quantidade {
-    constructor() {
+var typeorm_1 = require("typeorm");
+var Quantidade = /** @class */ (function () {
+    function Quantidade() {
         /*if(!this.id){
 
         }*/
     }
-};
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], Quantidade.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Quantidade.prototype, "id_produto", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Quantidade.prototype, "quantidade", void 0);
-__decorate([
-    (0, typeorm_1.CreateDateColumn)(),
-    __metadata("design:type", Date)
-], Quantidade.prototype, "created_at", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", Date)
-], Quantidade.prototype, "updated_at", void 0);
-Quantidade = __decorate([
-    (0, typeorm_1.Entity)("quantidades"),
-    __metadata("design:paramtypes", [])
-], Quantidade);
+    __decorate([
+        (0, typeorm_1.PrimaryGeneratedColumn)(),
+        __metadata("design:type", Number)
+    ], Quantidade.prototype, "id", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], Quantidade.prototype, "id_produto", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], Quantidade.prototype, "quantidade", void 0);
+    __decorate([
+        (0, typeorm_1.CreateDateColumn)(),
+        __metadata("design:type", Date)
+    ], Quantidade.prototype, "created_at", void 0);
+    __decorate([
+        (0, typeorm_1.UpdateDateColumn)(),
+        __metadata("design:type", Date)
+    ], Quantidade.prototype, "updated_at", void 0);
+    Quantidade = __decorate([
+        (0, typeorm_1.Entity)("quantidades"),
+        __metadata("design:paramtypes", [])
+    ], Quantidade);
+    return Quantidade;
+}());
 exports.Quantidade = Quantidade;
 //# sourceMappingURL=Quantidade.js.map

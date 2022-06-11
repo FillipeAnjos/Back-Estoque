@@ -1,4 +1,19 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,12 +22,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ItemRepositories = void 0;
-const typeorm_1 = require("typeorm");
-const Item_1 = require("../models/Item");
-let ItemRepositories = class ItemRepositories extends typeorm_1.Repository {
-};
-ItemRepositories = __decorate([
-    (0, typeorm_1.EntityRepository)(Item_1.Item)
-], ItemRepositories);
+var typeorm_1 = require("typeorm");
+var Item_1 = require("../models/Item");
+var ItemRepositories = /** @class */ (function (_super) {
+    __extends(ItemRepositories, _super);
+    function ItemRepositories() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    ItemRepositories = __decorate([
+        (0, typeorm_1.EntityRepository)(Item_1.Item)
+    ], ItemRepositories);
+    return ItemRepositories;
+}(typeorm_1.Repository));
 exports.ItemRepositories = ItemRepositories;
 //# sourceMappingURL=ItemRepositories.js.map

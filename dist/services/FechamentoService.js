@@ -8,150 +8,266 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FechamentoService = void 0;
-const typeorm_1 = require("typeorm");
-const FechamentoRepositories_1 = require("../repositories/FechamentoRepositories");
-const moment_1 = __importDefault(require("moment"));
-const VendaService_1 = require("./VendaService");
-class FechamentoService {
-    varStatusDataAterior() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
-            const dataAtual = new Date();
-            const verificarDataCaixa = yield fechamentoRepository.createQueryBuilder("fechamentos")
-                .where("data < :dataatual", { dataatual: dataAtual })
-                .andWhere("status = :status", { status: true })
-                .getOne();
-            return verificarDataCaixa != undefined ? verificarDataCaixa : true;
-        });
+var typeorm_1 = require("typeorm");
+var FechamentoRepositories_1 = require("../repositories/FechamentoRepositories");
+var moment_1 = __importDefault(require("moment"));
+var VendaService_1 = require("./VendaService");
+var FechamentoService = /** @class */ (function () {
+    function FechamentoService() {
     }
-    buscarStatusCaixa() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const statusAnterior = yield this.varStatusDataAterior();
-            if (statusAnterior != true) {
-                // O usuário não fechou o caixa anterior.
-                return statusAnterior;
-            }
-            const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
-            const dataAtual = (0, moment_1.default)(new Date()).format("YYYY-MM-DD");
-            const verificarDataCaixa = yield fechamentoRepository.createQueryBuilder("fechamentos")
-                .where("data = :dataatual", { dataatual: dataAtual })
-                .getOne();
-            if (verificarDataCaixa == undefined) {
-                // Abrir caixa
-                return { caixa: 1, msg: '' };
-            }
-            else {
-                const verificarStatusCaixa = yield fechamentoRepository.createQueryBuilder("fechamentos")
-                    .where("data = :dataatual", { dataatual: dataAtual })
-                    .andWhere("status = :status", { status: true })
-                    .getOne();
-                if (verificarStatusCaixa != undefined) {
-                    // Caixa aberto
-                    return { caixa: 2, msg: 'Caixa aberto com sucesso. Ótimo trabalho ...' };
+    FechamentoService.prototype.varStatusDataAterior = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var fechamentoRepository, dataAtual, verificarDataCaixa;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+                        dataAtual = new Date();
+                        return [4 /*yield*/, fechamentoRepository.createQueryBuilder("fechamentos")
+                                .where("data < :dataatual", { dataatual: dataAtual })
+                                .andWhere("status = :status", { status: true })
+                                .getOne()];
+                    case 1:
+                        verificarDataCaixa = _a.sent();
+                        return [2 /*return*/, verificarDataCaixa != undefined ? verificarDataCaixa : true];
                 }
-                else {
-                    // Caixa fechado
-                    return { caixa: 3, msg: 'Caixa fechado com sucesso. Até amanhã ...' };
+            });
+        });
+    };
+    FechamentoService.prototype.buscarStatusCaixa = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var statusAnterior, fechamentoRepository, dataAtual, verificarDataCaixa, verificarStatusCaixa;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.varStatusDataAterior()];
+                    case 1:
+                        statusAnterior = _a.sent();
+                        if (statusAnterior != true) {
+                            // O usuário não fechou o caixa anterior.
+                            return [2 /*return*/, statusAnterior];
+                        }
+                        fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+                        dataAtual = (0, moment_1.default)(new Date()).format("YYYY-MM-DD");
+                        return [4 /*yield*/, fechamentoRepository.createQueryBuilder("fechamentos")
+                                .where("data = :dataatual", { dataatual: dataAtual })
+                                .getOne()];
+                    case 2:
+                        verificarDataCaixa = _a.sent();
+                        if (!(verificarDataCaixa == undefined)) return [3 /*break*/, 3];
+                        // Abrir caixa
+                        return [2 /*return*/, { caixa: 1, msg: '' }];
+                    case 3: return [4 /*yield*/, fechamentoRepository.createQueryBuilder("fechamentos")
+                            .where("data = :dataatual", { dataatual: dataAtual })
+                            .andWhere("status = :status", { status: true })
+                            .getOne()];
+                    case 4:
+                        verificarStatusCaixa = _a.sent();
+                        if (verificarStatusCaixa != undefined) {
+                            // Caixa aberto
+                            return [2 /*return*/, { caixa: 2, msg: 'Caixa aberto com sucesso. Ótimo trabalho ...' }];
+                        }
+                        else {
+                            // Caixa fechado
+                            return [2 /*return*/, { caixa: 3, msg: 'Caixa fechado com sucesso. Até amanhã ...' }];
+                        }
+                        _a.label = 5;
+                    case 5: return [2 /*return*/];
                 }
-            }
+            });
         });
-    }
-    fechamentoSalvar({ valor_total, data, status }) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const dataAtual = (0, moment_1.default)(new Date()).format("YYYY-MM-DD");
-            const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
-            if (status == true) {
-                const fechamentoSalvado = fechamentoRepository.create({ valor_total, data: new Date(), status });
-                var fechar = yield fechamentoRepository.save(fechamentoSalvado);
-                if (!fechar) {
-                    return { error: "Erro salvar na fechamento." };
+    };
+    FechamentoService.prototype.fechamentoSalvar = function (_a) {
+        var valor_total = _a.valor_total, data = _a.data, status = _a.status;
+        return __awaiter(this, void 0, void 0, function () {
+            var dataAtual, fechamentoRepository, fechamentoSalvado, fechar, retorno, fechamentoEditar, fechamentoUpdate, retorno;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        dataAtual = (0, moment_1.default)(new Date()).format("YYYY-MM-DD");
+                        fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+                        if (!(status == true)) return [3 /*break*/, 3];
+                        fechamentoSalvado = fechamentoRepository.create({ valor_total: valor_total, data: new Date(), status: status });
+                        return [4 /*yield*/, fechamentoRepository.save(fechamentoSalvado)];
+                    case 1:
+                        fechar = _b.sent();
+                        if (!fechar) {
+                            return [2 /*return*/, { error: "Erro salvar na fechamento." }];
+                        }
+                        return [4 /*yield*/, this.buscarStatusCaixa()];
+                    case 2:
+                        retorno = _b.sent();
+                        return [2 /*return*/, retorno];
+                    case 3:
+                        fechamentoEditar = { valor_total: valor_total, data: new Date(), status: status };
+                        return [4 /*yield*/, fechamentoRepository.createQueryBuilder("fechamentos")
+                                .update("fechamentos")
+                                .set(fechamentoEditar)
+                                .where("data = :dataatual", { dataatual: dataAtual })
+                                .execute()];
+                    case 4:
+                        fechamentoUpdate = _b.sent();
+                        if (!fechamentoUpdate) {
+                            return [2 /*return*/, { error: "Erro ao atualizar o fechamento." }];
+                        }
+                        return [4 /*yield*/, this.buscarStatusCaixa()];
+                    case 5:
+                        retorno = _b.sent();
+                        return [2 /*return*/, retorno];
                 }
-                const retorno = yield this.buscarStatusCaixa();
-                return retorno;
-            }
-            else {
-                const fechamentoEditar = { valor_total, data: new Date(), status };
-                const fechamentoUpdate = yield fechamentoRepository.createQueryBuilder("fechamentos")
-                    .update("fechamentos")
-                    .set(fechamentoEditar)
-                    .where("data = :dataatual", { dataatual: dataAtual })
-                    .execute();
-                if (!fechamentoUpdate) {
-                    return { error: "Erro ao atualizar o fechamento." };
+            });
+        });
+    };
+    FechamentoService.prototype.fechamentoSalvarAnterior = function (_a) {
+        var valor_total = _a.valor_total, data = _a.data, status = _a.status;
+        return __awaiter(this, void 0, void 0, function () {
+            var fechamentoRepository, fechamentoEditarAnterior, fechamentoUpdateAnterior, retorno;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+                        fechamentoEditarAnterior = { valor_total: valor_total, data: data, status: status };
+                        return [4 /*yield*/, fechamentoRepository.createQueryBuilder("fechamentos")
+                                .update("fechamentos")
+                                .set(fechamentoEditarAnterior)
+                                .where("data = :dataantiga", { dataantiga: data })
+                                .execute()];
+                    case 1:
+                        fechamentoUpdateAnterior = _b.sent();
+                        if (!fechamentoUpdateAnterior) {
+                            return [2 /*return*/, { error: "Erro ao tentar atualizar o fechamento antigo." }];
+                        }
+                        return [4 /*yield*/, this.buscarStatusCaixa()];
+                    case 2:
+                        retorno = _b.sent();
+                        return [2 /*return*/, retorno];
                 }
-                const retorno = yield this.buscarStatusCaixa();
-                return retorno;
-            }
+            });
         });
-    }
-    fechamentoSalvarAnterior({ valor_total, data, status }) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
-            const fechamentoEditarAnterior = { valor_total, data, status };
-            const fechamentoUpdateAnterior = yield fechamentoRepository.createQueryBuilder("fechamentos")
-                .update("fechamentos")
-                .set(fechamentoEditarAnterior)
-                .where("data = :dataantiga", { dataantiga: data })
-                .execute();
-            if (!fechamentoUpdateAnterior) {
-                return { error: "Erro ao tentar atualizar o fechamento antigo." };
-            }
-            const retorno = yield this.buscarStatusCaixa();
-            return retorno;
+    };
+    FechamentoService.prototype.buscarIdFechamento = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var fechamentoRepository, idFechamento, id;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+                        return [4 /*yield*/, fechamentoRepository.createQueryBuilder("fechamentos")
+                                .where("valor_total = :vl", { vl: 0 })
+                                .andWhere("status = :status", { status: true })
+                                .getOne()];
+                    case 1:
+                        idFechamento = _a.sent();
+                        id = idFechamento.id;
+                        return [2 /*return*/, id];
+                }
+            });
         });
-    }
-    buscarIdFechamento() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
-            const idFechamento = yield fechamentoRepository.createQueryBuilder("fechamentos")
-                .where("valor_total = :vl", { vl: 0 })
-                .andWhere("status = :status", { status: true })
-                .getOne();
-            const { id } = idFechamento;
-            return id;
+    };
+    FechamentoService.prototype.buscarVendasDia = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var fechamentoRepository, fechamentoDia, id, vendaService, valorVendaDia;
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+                        return [4 /*yield*/, fechamentoRepository.createQueryBuilder("fechamentos")
+                                .where("status = :status", { status: true })
+                                .getOne()];
+                    case 1:
+                        fechamentoDia = _b.sent();
+                        if (fechamentoDia == undefined) {
+                            return [2 /*return*/, false];
+                        }
+                        id = fechamentoDia.id;
+                        vendaService = new VendaService_1.VendaService();
+                        valorVendaDia = vendaService.buscarValorDia(id);
+                        return [4 /*yield*/, valorVendaDia];
+                    case 2:
+                        if ((_b.sent()) == undefined) {
+                            return [2 /*return*/, false];
+                        }
+                        _a = { error: false, msg: "Venda do dia somada com sucesso." };
+                        return [4 /*yield*/, valorVendaDia];
+                    case 3: return [2 /*return*/, (_a.valor_total = _b.sent(), _a)];
+                }
+            });
         });
-    }
-    buscarVendasDia() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
-            const fechamentoDia = yield fechamentoRepository.createQueryBuilder("fechamentos")
-                .where("status = :status", { status: true })
-                .getOne();
-            if (fechamentoDia == undefined) {
-                return false;
-            }
-            const { id } = fechamentoDia;
-            const vendaService = new VendaService_1.VendaService();
-            const valorVendaDia = vendaService.buscarValorDia(id);
-            if ((yield valorVendaDia) == undefined) {
-                return false;
-            }
-            return { error: false, msg: "Venda do dia somada com sucesso.", valor_total: yield valorVendaDia };
+    };
+    FechamentoService.prototype.buscarFechamentosPorMes = function (interacao) {
+        return __awaiter(this, void 0, void 0, function () {
+            var fechamentoRepository, anoAtual, query, fechamentos;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+                        anoAtual = new Date().getFullYear();
+                        query = "select count(fechamentos.id) as fechamentosmes from fechamentos where EXTRACT(MONTH  from fechamentos.data) = ".concat(interacao, " and EXTRACT(YEAR from fechamentos.data) = ").concat(anoAtual);
+                        return [4 /*yield*/, fechamentoRepository.query(query)];
+                    case 1:
+                        fechamentos = _a.sent();
+                        return [2 /*return*/, fechamentos[0].fechamentosmes];
+                }
+            });
         });
-    }
-    buscarFechamentosPorMes(interacao) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
-            var anoAtual = new Date().getFullYear();
-            var query = `select count(fechamentos.id) as fechamentosmes from fechamentos where EXTRACT(MONTH  from fechamentos.data) = ${interacao} and EXTRACT(YEAR from fechamentos.data) = ${anoAtual}`;
-            var fechamentos = yield fechamentoRepository.query(query);
-            return fechamentos[0].fechamentosmes;
+    };
+    FechamentoService.prototype.listarFechamentos = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var array, i, _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        array = [];
+                        i = 1;
+                        _c.label = 1;
+                    case 1:
+                        if (!(i <= 12)) return [3 /*break*/, 4];
+                        _b = (_a = array).push;
+                        return [4 /*yield*/, this.buscarFechamentosPorMes(i)];
+                    case 2:
+                        _b.apply(_a, [_c.sent()]);
+                        _c.label = 3;
+                    case 3:
+                        i++;
+                        return [3 /*break*/, 1];
+                    case 4: return [2 /*return*/, array];
+                }
+            });
         });
-    }
-    listarFechamentos() {
-        return __awaiter(this, void 0, void 0, function* () {
-            var array = [];
-            for (var i = 1; i <= 12; i++) {
-                array.push(yield this.buscarFechamentosPorMes(i));
-            }
-            return array;
-        });
-    }
-}
+    };
+    return FechamentoService;
+}());
 exports.FechamentoService = FechamentoService;
 //# sourceMappingURL=FechamentoService.js.map
