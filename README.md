@@ -24,9 +24,11 @@ React Js / Next Js / Sass / TypeScript / JavaScript / TypeOrm / PostgreSQL
 npm install typeorm
 
 npm add express
-npm add @types/express
+npm add @types/express - D
 
 npm add ts-node-dev -D
+
+npm install typescript
 
 npm install bcryptjs
 npm add @types/bcryptjs -D
