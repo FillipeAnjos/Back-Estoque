@@ -1,98 +1,75 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-import { getCustomRepository } from "typeorm";
-import { UsersRepositories } from "../repositories/UsersRepositories";
-import { compare, hash } from "bcryptjs";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserService = void 0;
+const typeorm_1 = require("typeorm");
+const UsersRepositories_1 = require("../repositories/UsersRepositories");
+const bcryptjs_1 = require("bcryptjs");
 class UserService {
-    execute({ nome, sobre, email, senha, nascimento, genero, admin, senhaadm }) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const usersRepository = getCustomRepository(UsersRepositories);
-            if (!email) {
-                //throw new Error("Favor informar seu email!");
-                var error = { error: "Favor informar seu email." };
-                return error;
-            }
-            const userExiste = yield usersRepository.findOne({ email });
-            if (userExiste) {
-                //throw new Error("Você já possui uma conta!")
-                var error = { error: "Você já possui uma conta." };
-                return error;
-            }
-            const senhaHash = yield hash(senha, 8);
-            const adminSalvarBanco = admin == senhaadm ? 'true' : 'false';
-            const userSalved = usersRepository.create({
-                nome,
-                sobre,
-                email,
-                senha: senhaHash,
-                nascimento,
-                genero,
-                admin: adminSalvarBanco
-            });
-            var usuario = yield usersRepository.save(userSalved);
-            return { success: "Usuário criado com sucesso.", usuario };
+    async execute({ nome, sobre, email, senha, nascimento, genero, admin, senhaadm }) {
+        const usersRepository = (0, typeorm_1.getCustomRepository)(UsersRepositories_1.UsersRepositories);
+        if (!email) {
+            var error = { error: "Favor informar seu email." };
+            return error;
+        }
+        const userExiste = await usersRepository.findOne({ email });
+        if (userExiste) {
+            var error = { error: "Você já possui uma conta." };
+            return error;
+        }
+        const senhaHash = await (0, bcryptjs_1.hash)(senha, 8);
+        const adminSalvarBanco = admin == senhaadm ? 'true' : 'false';
+        const userSalved = usersRepository.create({
+            nome,
+            sobre,
+            email,
+            senha: senhaHash,
+            nascimento,
+            genero,
+            admin: adminSalvarBanco
         });
+        var usuario = await usersRepository.save(userSalved);
+        return { success: "Usuário criado com sucesso.", usuario };
     }
-    buscarUserLogado(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = getCustomRepository(UsersRepositories);
-            const user = yield userRepository.findOne({ id });
-            // Verificar se o id existe.
-            if (!user) {
-                var error = { status: false, error: "usuário não encontrado." };
-                return error;
-            }
-            return user;
-        });
+    async buscarUserLogado(id) {
+        const userRepository = (0, typeorm_1.getCustomRepository)(UsersRepositories_1.UsersRepositories);
+        const user = await userRepository.findOne({ id });
+        if (!user) {
+            var error = { status: false, error: "usuário não encontrado." };
+            return error;
+        }
+        return user;
     }
-    logar({ email, senha }) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = getCustomRepository(UsersRepositories);
-            const user = yield userRepository.findOne({ email });
-            // Verificar se o email existe.
-            if (!user) {
-                var error = { status: false, error: "Email e/ou Senha incorretos." };
-                return error;
-            }
-            // Verificar se a senha está correta
-            const senhHash = yield compare(senha, user.senha);
-            if (!senhHash) {
-                var error = { status: false, error: "Email e/ou Senha incorretos.." };
-                return error;
-            }
-            // Verificar se o usuário tem perfil de administrador
-            if (user.admin != 'true') {
-                var error = { status: false, error: "Usuário não é administrador do sistema." };
-                return error;
-            }
-            var token = Math.random().toString() + "_" + user.id; //'Token-12345678911';
-            //return { status: true, success: "Usuário logado com sucesso.", name: user }
-            return { status: true, success: "Usuário logado com sucesso.", id: user.id, name: user.nome, email: user.email, token: token };
-        });
+    async logar({ email, senha }) {
+        const userRepository = (0, typeorm_1.getCustomRepository)(UsersRepositories_1.UsersRepositories);
+        const user = await userRepository.findOne({ email });
+        if (!user) {
+            var error = { status: false, error: "Email e/ou Senha incorretos." };
+            return error;
+        }
+        const senhHash = await (0, bcryptjs_1.compare)(senha, user.senha);
+        if (!senhHash) {
+            var error = { status: false, error: "Email e/ou Senha incorretos.." };
+            return error;
+        }
+        if (user.admin != 'true') {
+            var error = { status: false, error: "Usuário não é administrador do sistema." };
+            return error;
+        }
+        var token = Math.random().toString() + "_" + user.id;
+        return { status: true, success: "Usuário logado com sucesso.", id: user.id, name: user.nome, email: user.email, token: token };
     }
-    buscarUsers() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const usersRepository = getCustomRepository(UsersRepositories);
-            const usuarios = yield usersRepository.createQueryBuilder("users")
-                .where("admin = :admin", { admin: true })
-                .getMany();
-            return usuarios;
-        });
+    async buscarUsers() {
+        const usersRepository = (0, typeorm_1.getCustomRepository)(UsersRepositories_1.UsersRepositories);
+        const usuarios = await usersRepository.createQueryBuilder("users")
+            .where("admin = :admin", { admin: true })
+            .getMany();
+        return usuarios;
     }
-    buscarUltimosUsers() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const usersRepository = getCustomRepository(UsersRepositories);
-            const usuarios = yield usersRepository.query(`select * from users order by id desc limit 5`);
-            return usuarios;
-        });
+    async buscarUltimosUsers() {
+        const usersRepository = (0, typeorm_1.getCustomRepository)(UsersRepositories_1.UsersRepositories);
+        const usuarios = await usersRepository.query(`select * from users order by id desc limit 5`);
+        return usuarios;
     }
 }
-export { UserService };
+exports.UserService = UserService;
 //# sourceMappingURL=UserService.js.map

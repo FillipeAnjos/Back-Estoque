@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,63 +8,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Produto = void 0;
+const typeorm_1 = require("typeorm");
 let Produto = class Produto {
-    /*@OneToMany(type => Estoque, estoques => estoques.id_produto)
-    estoques: Estoque[];*/
     constructor() {
-        /*if(!this.id){
-
-        }*/
     }
 };
 __decorate([
-    PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Produto.prototype, "id", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Produto.prototype, "produto", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Produto.prototype, "categoria", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Produto.prototype, "descricao", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Produto.prototype, "cor", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Produto.prototype, "tamanho", void 0);
 __decorate([
-    Column({ type: "float" }),
+    (0, typeorm_1.Column)({ type: "float" }),
     __metadata("design:type", Number)
 ], Produto.prototype, "valor", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Produto.prototype, "obs", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], Produto.prototype, "status", void 0);
 __decorate([
-    CreateDateColumn(),
+    (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Produto.prototype, "created_at", void 0);
 __decorate([
-    UpdateDateColumn(),
+    (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Produto.prototype, "updated_at", void 0);
 Produto = __decorate([
-    Entity("produtos"),
+    (0, typeorm_1.Entity)("produtos"),
     __metadata("design:paramtypes", [])
 ], Produto);
-export { Produto };
+exports.Produto = Produto;
 //# sourceMappingURL=Produto.js.map

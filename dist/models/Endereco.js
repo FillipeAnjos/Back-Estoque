@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,57 +8,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Endereco = void 0;
+const typeorm_1 = require("typeorm");
 let Endereco = class Endereco {
     constructor() {
-        /*if(!this.id){
-
-        }*/
     }
 };
 __decorate([
-    PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Endereco.prototype, "id", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Endereco.prototype, "id_cliente", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Endereco.prototype, "id_fornecedor", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Endereco.prototype, "rua", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Endereco.prototype, "numero", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Endereco.prototype, "bairro", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Endereco.prototype, "municipio", void 0);
 __decorate([
-    Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Endereco.prototype, "uf", void 0);
 __decorate([
-    CreateDateColumn(),
+    (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Endereco.prototype, "created_at", void 0);
 __decorate([
-    UpdateDateColumn(),
+    (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Endereco.prototype, "updated_at", void 0);
 Endereco = __decorate([
-    Entity("enderecos"),
+    (0, typeorm_1.Entity)("enderecos"),
     __metadata("design:paramtypes", [])
 ], Endereco);
-export { Endereco };
+exports.Endereco = Endereco;
 //# sourceMappingURL=Endereco.js.map
