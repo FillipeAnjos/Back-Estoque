@@ -1,15 +1,18 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { EntityRepository, Repository } from "typeorm";
-import { Estoque } from "../models/Estoque";
-let EstoqueRepositories = class EstoqueRepositories extends Repository {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EstoqueRepositories = void 0;
+const typeorm_1 = require("typeorm");
+const Estoque_1 = require("../models/Estoque");
+let EstoqueRepositories = class EstoqueRepositories extends typeorm_1.Repository {
 };
 EstoqueRepositories = __decorate([
-    EntityRepository(Estoque)
+    (0, typeorm_1.EntityRepository)(Estoque_1.Estoque)
 ], EstoqueRepositories);
-export { EstoqueRepositories };
+exports.EstoqueRepositories = EstoqueRepositories;
 //# sourceMappingURL=EstoqueRepositories.js.map
