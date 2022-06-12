@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateItem1641216735727 = void 0;
-const typeorm_1 = require("typeorm");
-class CreateItem1641216735727 {
+import { Table } from "typeorm";
+export class CreateItem1641216735727 {
     async up(queryRunner) {
-        await queryRunner.createTable(new typeorm_1.Table({
+        await queryRunner.createTable(new Table({
             name: "itens",
             columns: [
                 {
@@ -69,5 +66,4 @@ class CreateItem1641216735727 {
         await queryRunner.dropTable("itens");
     }
 }
-exports.CreateItem1641216735727 = CreateItem1641216735727;
 //# sourceMappingURL=1641216735727-CreateItem.js.map

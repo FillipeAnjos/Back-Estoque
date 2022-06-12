@@ -1,12 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.EnderecoService = void 0;
-const typeorm_1 = require("typeorm");
-const EnderecoRepositories_1 = require("../repositories/EnderecoRepositories");
+import { getCustomRepository } from "typeorm";
+import { EnderecoRepositories } from "../repositories/EnderecoRepositories";
 class EnderecoService {
     async cadastrarEndereco(enderecoSalvar) {
         const { id_cliente, endereco, numero, bairro, municipio, uf } = enderecoSalvar;
-        const enderecoRepository = (0, typeorm_1.getCustomRepository)(EnderecoRepositories_1.EnderecoRepositories);
+        const enderecoRepository = getCustomRepository(EnderecoRepositories);
         const enderecoCreate = enderecoRepository.create({ id_cliente, rua: endereco, numero, bairro, municipio, uf });
         const salvarEndereco = await enderecoRepository.save(enderecoCreate);
         if (!salvarEndereco) {
@@ -16,7 +13,7 @@ class EnderecoService {
     }
     async cadastrarEnderecoFornecedor(enderecoSalvar) {
         const { id_fornecedor, endereco, numero, bairro, municipio, uf } = enderecoSalvar;
-        const enderecoRepository = (0, typeorm_1.getCustomRepository)(EnderecoRepositories_1.EnderecoRepositories);
+        const enderecoRepository = getCustomRepository(EnderecoRepositories);
         const enderecoCreate = enderecoRepository.create({ id_fornecedor, rua: endereco, numero, bairro, municipio, uf });
         const salvarEndereco = await enderecoRepository.save(enderecoCreate);
         if (!salvarEndereco) {
@@ -26,7 +23,7 @@ class EnderecoService {
     }
     async editarEndereco(updateSalvar) {
         const { id_cliente, rua, numero, uf } = updateSalvar;
-        const enderecoRepository = (0, typeorm_1.getCustomRepository)(EnderecoRepositories_1.EnderecoRepositories);
+        const enderecoRepository = getCustomRepository(EnderecoRepositories);
         const updateEnderecos = enderecoRepository.createQueryBuilder("enderecos")
             .update("enderecos")
             .set({ id_cliente: id_cliente, rua: rua, numero: numero, uf: uf })
@@ -39,7 +36,7 @@ class EnderecoService {
     }
     async editarEnderecoFornecedor(updateSalvar) {
         const { id_fornecedor, rua, numero, uf } = updateSalvar;
-        const enderecoRepository = (0, typeorm_1.getCustomRepository)(EnderecoRepositories_1.EnderecoRepositories);
+        const enderecoRepository = getCustomRepository(EnderecoRepositories);
         const updateEnderecos = enderecoRepository.createQueryBuilder("enderecos")
             .update("enderecos")
             .set({ id_fornecedor: id_fornecedor, rua: rua, numero: numero, uf: uf })
@@ -51,5 +48,5 @@ class EnderecoService {
         return true;
     }
 }
-exports.EnderecoService = EnderecoService;
+export { EnderecoService };
 //# sourceMappingURL=EnderecoService.js.map

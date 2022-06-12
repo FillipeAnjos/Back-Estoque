@@ -1,12 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ValorService = void 0;
-const typeorm_1 = require("typeorm");
-const ValorRepositories_1 = require("../repositories/ValorRepositories");
+import { getCustomRepository } from "typeorm";
+import { ValorRepositories } from "../repositories/ValorRepositories";
 class ValorService {
     async salvarValor(codigo, valor) {
         var id_produto = codigo;
-        const valorRepository = (0, typeorm_1.getCustomRepository)(ValorRepositories_1.ValorRepositories);
+        const valorRepository = getCustomRepository(ValorRepositories);
         const valorSalvado = valorRepository.create({ id_produto, valor });
         var vlr = await valorRepository.save(valorSalvado);
         if (!vlr) {
@@ -14,5 +11,5 @@ class ValorService {
         }
     }
 }
-exports.ValorService = ValorService;
+export { ValorService };
 //# sourceMappingURL=ValorService.js.map

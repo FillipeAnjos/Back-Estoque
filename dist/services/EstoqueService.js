@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.EstoqueService = void 0;
-const typeorm_1 = require("typeorm");
-const EstoqueRepositories_1 = require("../repositories/EstoqueRepositories");
+import { getCustomRepository } from "typeorm";
+import { EstoqueRepositories } from "../repositories/EstoqueRepositories";
 class EstoqueService {
     salvarItemEstoque(salvar) {
-        const estoqueRepository = (0, typeorm_1.getCustomRepository)(EstoqueRepositories_1.EstoqueRepositories);
+        const estoqueRepository = getCustomRepository(EstoqueRepositories);
         var salvarEstoque = estoqueRepository.create(salvar);
         var itemEstoque = estoqueRepository.save(salvarEstoque);
         if (!itemEstoque) {
@@ -13,5 +10,5 @@ class EstoqueService {
         }
     }
 }
-exports.EstoqueService = EstoqueService;
+export { EstoqueService };
 //# sourceMappingURL=EstoqueService.js.map

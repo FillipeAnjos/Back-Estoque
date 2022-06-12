@@ -1,18 +1,12 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.VendaService = void 0;
-const moment_1 = __importDefault(require("moment"));
-const typeorm_1 = require("typeorm");
-const VendaRepositories_1 = require("../repositories/VendaRepositories");
-const FechamentoService_1 = require("./FechamentoService");
+import moment from "moment";
+import { getConnection, getCustomRepository } from "typeorm";
+import { VendaRepositories } from "../repositories/VendaRepositories";
+import { FechamentoService } from "./FechamentoService";
 class VendaService {
     async salvarVenda(dados) {
-        const vendaRepository = (0, typeorm_1.getCustomRepository)(VendaRepositories_1.VendaRepositories);
-        const fechamentoService = new FechamentoService_1.FechamentoService();
-        const dataAtual = (0, moment_1.default)(new Date()).format("YYYY-MM-DD");
+        const vendaRepository = getCustomRepository(VendaRepositories);
+        const fechamentoService = new FechamentoService();
+        const dataAtual = moment(new Date()).format("YYYY-MM-DD");
         if (dados.itens.length == 0) {
             return { error: true, msg: "Sua lista de produtos está vazia, favor informar os produtos da venda." };
         }
@@ -40,7 +34,7 @@ class VendaService {
             return { error: true, msg: "Error: Você precisa informar qual a modalidade de pagamento." };
         }
         const idFechamento = await fechamentoService.buscarIdFechamento();
-        const connection = (0, typeorm_1.getConnection)();
+        const connection = getConnection();
         const queryRunner = connection.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
@@ -89,7 +83,7 @@ class VendaService {
         if (idFechamento == null) {
             return undefined;
         }
-        const vendaRepository = (0, typeorm_1.getCustomRepository)(VendaRepositories_1.VendaRepositories);
+        const vendaRepository = getCustomRepository(VendaRepositories);
         const buscarDadosVenda = await vendaRepository.createQueryBuilder("vendas")
             .where("id_fechamento = :id", { id: idFechamento })
             .getMany();
@@ -100,14 +94,14 @@ class VendaService {
         return valorSomado;
     }
     async listarVendas() {
-        const vendaRepository = (0, typeorm_1.getCustomRepository)(VendaRepositories_1.VendaRepositories);
+        const vendaRepository = getCustomRepository(VendaRepositories);
         const vendas = await vendaRepository.createQueryBuilder("vendas").getMany();
         return vendas;
     }
     async listarVendasParam(param) {
         var filtro = parseInt(param.filtro);
         var dados = param.dados;
-        const vendaRepository = (0, typeorm_1.getCustomRepository)(VendaRepositories_1.VendaRepositories);
+        const vendaRepository = getCustomRepository(VendaRepositories);
         let dadosVendas = null;
         let queryInicial = 'select * from vendas';
         if (filtro == 1) {
@@ -132,7 +126,7 @@ class VendaService {
         var dataFim = param.dadosdatafim;
         var ordenacao = param.ordenacao;
         var ordenacaoordem = param.ordenacaoordem;
-        const vendaRepository = (0, typeorm_1.getCustomRepository)(VendaRepositories_1.VendaRepositories);
+        const vendaRepository = getCustomRepository(VendaRepositories);
         let dadosVendas = null;
         let queryInicial = 'select * from vendas';
         if (filtro != 3) {
@@ -176,7 +170,7 @@ class VendaService {
         var dataFim = param.dadosdatafim;
         var ordenacao = param.ordenacao;
         var ordenacaoordem = param.ordenacaoordem;
-        const vendaRepository = (0, typeorm_1.getCustomRepository)(VendaRepositories_1.VendaRepositories);
+        const vendaRepository = getCustomRepository(VendaRepositories);
         let dadosVendas = null;
         let queryInicial = 'select * from fechamentos';
         if (filtro != 3) {
@@ -208,7 +202,7 @@ class VendaService {
         return filtrarVendas;
     }
     async buscarVendasPorMes(interacao) {
-        const vendaRepository = (0, typeorm_1.getCustomRepository)(VendaRepositories_1.VendaRepositories);
+        const vendaRepository = getCustomRepository(VendaRepositories);
         var anoAtual = new Date().getFullYear();
         var query = `select count(vendas.id) as vendasmes from vendas where EXTRACT(MONTH  from vendas.data) = ${interacao} and EXTRACT(YEAR from vendas.data) = ${anoAtual}`;
         var vendas = await vendaRepository.query(query);
@@ -222,5 +216,5 @@ class VendaService {
         return array;
     }
 }
-exports.VendaService = VendaService;
+export { VendaService };
 //# sourceMappingURL=VendaService.js.map

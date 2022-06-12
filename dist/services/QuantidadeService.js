@@ -1,12 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.QuantidadeService = void 0;
-const typeorm_1 = require("typeorm");
-const QuantidadeRepositories_1 = require("../repositories/QuantidadeRepositories");
-const EstoqueService_1 = require("./EstoqueService");
+import { getCustomRepository } from "typeorm";
+import { QuantidadeRepositories } from "../repositories/QuantidadeRepositories";
+import { EstoqueService } from "./EstoqueService";
 class QuantidadeService {
     async salvarQuantidade(dados) {
-        const quantidadeRepository = (0, typeorm_1.getCustomRepository)(QuantidadeRepositories_1.QuantidadeRepositories);
+        const quantidadeRepository = getCustomRepository(QuantidadeRepositories);
         const salvarQuantidade = quantidadeRepository.create(dados);
         const salvarqtd = quantidadeRepository.save(salvarQuantidade);
         if (!salvarqtd) {
@@ -15,13 +12,13 @@ class QuantidadeService {
     }
     async editarUnidade(dados) {
         const { id_produto, valor, entrada_saida, unidade, acao } = dados;
-        const quantidadeRepository = (0, typeorm_1.getCustomRepository)(QuantidadeRepositories_1.QuantidadeRepositories);
+        const quantidadeRepository = getCustomRepository(QuantidadeRepositories);
         const dadosQuantidade = await quantidadeRepository.createQueryBuilder("quantidades")
             .where("id_produto = :id_produto", { id_produto: id_produto })
             .getOne();
         const { quantidade } = dadosQuantidade;
         var quantidadeNova = null;
-        const estoqueService = new EstoqueService_1.EstoqueService();
+        const estoqueService = new EstoqueService();
         var dadosEstoque = null;
         if (entrada_saida == '1') {
             quantidadeNova = quantidade + unidade;
@@ -70,7 +67,7 @@ class QuantidadeService {
         }
     }
     async verificarQuantidadeItem({ id_produto, unidade }) {
-        const quantidadeRepository = (0, typeorm_1.getCustomRepository)(QuantidadeRepositories_1.QuantidadeRepositories);
+        const quantidadeRepository = getCustomRepository(QuantidadeRepositories);
         const dadosQuantidade = await quantidadeRepository.createQueryBuilder("quantidades")
             .where("id_produto = :id_produto", { id_produto: id_produto })
             .getOne();
@@ -84,5 +81,5 @@ class QuantidadeService {
         return unidade;
     }
 }
-exports.QuantidadeService = QuantidadeService;
+export { QuantidadeService };
 //# sourceMappingURL=QuantidadeService.js.map

@@ -1,14 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ClienteService = void 0;
-const typeorm_1 = require("typeorm");
-const ClienteRepositories_1 = require("../repositories/ClienteRepositories");
-const EnderecoService_1 = require("./EnderecoService");
-const TelefoneService_1 = require("./TelefoneService");
+import { getCustomRepository } from "typeorm";
+import { ClienteRepositories } from "../repositories/ClienteRepositories";
+import { EnderecoService } from "./EnderecoService";
+import { TelefoneService } from "./TelefoneService";
 class ClienteService {
     async cadastrarCliente(cliente) {
         const { nome, cpf, nascimento, genero, civil, uf, rg, endereco, numero, tel, cel, email } = cliente;
-        const clienteRepository = (0, typeorm_1.getCustomRepository)(ClienteRepositories_1.ClienteRepositories);
+        const clienteRepository = getCustomRepository(ClienteRepositories);
         var nasc = nascimento == '' ? null : nascimento;
         const clienteCreate = clienteRepository.create({ nome, email, cpf, nascimento: nasc, genero, civil, rg });
         const clienteSalvar = await clienteRepository.save(clienteCreate);
@@ -17,14 +14,14 @@ class ClienteService {
         }
         const idInserido = await clienteRepository.query("select max(id) as id_cliente from clientes");
         var id_cliente = parseInt(idInserido[0].id_cliente);
-        const enderecoService = new EnderecoService_1.EnderecoService();
+        const enderecoService = new EnderecoService();
         var bairro = null;
         var municipio = null;
         const enderecoCadastrar = enderecoService.cadastrarEndereco({ id_cliente, endereco, numero, bairro, municipio, uf });
         if (!enderecoCadastrar) {
             return { error: true, msg: "Error ao tentar cadastrar o endereço do cliente." };
         }
-        const telefoneService = new TelefoneService_1.TelefoneService();
+        const telefoneService = new TelefoneService();
         var celular2 = null;
         const telefoneCadastrar = telefoneService.cadastrarTelefone({ id_cliente, telefone: tel, celular: cel, celular2 });
         if (!telefoneCadastrar) {
@@ -33,7 +30,7 @@ class ClienteService {
         return { error: false, msg: "Cliente cadastrado com sucesso." };
     }
     async listarClientes() {
-        const clienteRepository = (0, typeorm_1.getCustomRepository)(ClienteRepositories_1.ClienteRepositories);
+        const clienteRepository = getCustomRepository(ClienteRepositories);
         const clientes = await clienteRepository.query(`select c.id as id,
         c.nome as nome,
         c.email as email,
@@ -55,7 +52,7 @@ class ClienteService {
     async listarClientesParam(param) {
         var filtro = parseInt(param.filtro);
         var dados = param.dados;
-        const clienteRepository = (0, typeorm_1.getCustomRepository)(ClienteRepositories_1.ClienteRepositories);
+        const clienteRepository = getCustomRepository(ClienteRepositories);
         let dadosClientes = null;
         let queryInicial = 'select * from clientes c inner join enderecos e on c.id = e.id_cliente inner join telefones t on t.id_cliente = c.id';
         if (filtro == 1) {
@@ -74,7 +71,7 @@ class ClienteService {
         return filtrarClientes;
     }
     async excluirCliente({ id }) {
-        const clienteRepository = (0, typeorm_1.getCustomRepository)(ClienteRepositories_1.ClienteRepositories);
+        const clienteRepository = getCustomRepository(ClienteRepositories);
         if (!id) {
             return { error: true, msg: "Erro código invalido." };
         }
@@ -93,7 +90,7 @@ class ClienteService {
         return { error: false, msg: "Cliente excluso com sucesso." };
     }
     async editarCliente({ id, nome, cpf, nascimento, genero, civil, uf, rg, endereco, numero, tel, cel, email }) {
-        const clienteRepository = (0, typeorm_1.getCustomRepository)(ClienteRepositories_1.ClienteRepositories);
+        const clienteRepository = getCustomRepository(ClienteRepositories);
         const updateCliente = clienteRepository.createQueryBuilder("clientes")
             .update("clientes")
             .set({ nome: nome, email: email, cpf: cpf, nascimento: nascimento, genero: genero, civil: civil, rg: rg })
@@ -102,12 +99,12 @@ class ClienteService {
         if (!updateCliente) {
             return { error: true, msg: "Ocorreu um erro ao atualizar os dados do cliente." };
         }
-        const enderecoService = new EnderecoService_1.EnderecoService();
+        const enderecoService = new EnderecoService();
         const updateEndereco = enderecoService.editarEndereco({ id_cliente: id, rua: endereco, numero, uf });
         if (!updateEndereco) {
             return { error: true, msg: "Ocorreu um erro ao atualizar os dados do endereco." };
         }
-        const telefoneService = new TelefoneService_1.TelefoneService();
+        const telefoneService = new TelefoneService();
         const updateTelefone = telefoneService.editarTelefone({ id_cliente: id, telefone: tel, celular: cel });
         if (!updateTelefone) {
             return { error: true, msg: "Ocorreu um erro ao atualizar os dados do telefone." };
@@ -119,7 +116,7 @@ class ClienteService {
         var dados = param.dados;
         var ordenacao = param.ordenacao;
         var ordenacaoordem = param.ordenacaoordem;
-        const clienteRepository = (0, typeorm_1.getCustomRepository)(ClienteRepositories_1.ClienteRepositories);
+        const clienteRepository = getCustomRepository(ClienteRepositories);
         let dadosClientes = null;
         let queryInicial = `select * from clientes`;
         if (filtro == 1) {
@@ -151,5 +148,5 @@ class ClienteService {
         return filtrarClientes;
     }
 }
-exports.ClienteService = ClienteService;
+export { ClienteService };
 //# sourceMappingURL=ClienteService.js.map

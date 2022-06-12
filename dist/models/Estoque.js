@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,52 +7,50 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Estoque = void 0;
-const typeorm_1 = require("typeorm");
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 let Estoque = class Estoque {
     constructor() {
     }
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], Estoque.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", Number)
 ], Estoque.prototype, "id_produto", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    Column({ nullable: true }),
     __metadata("design:type", Number)
 ], Estoque.prototype, "entrada", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    Column({ nullable: true }),
     __metadata("design:type", Number)
 ], Estoque.prototype, "saida", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", Number)
 ], Estoque.prototype, "saldo", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "float" }),
+    Column({ type: "float" }),
     __metadata("design:type", Number)
 ], Estoque.prototype, "valor_atual", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", String)
 ], Estoque.prototype, "acao", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)(),
+    CreateDateColumn(),
     __metadata("design:type", Date)
 ], Estoque.prototype, "created_at", void 0);
 __decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
+    UpdateDateColumn(),
     __metadata("design:type", Date)
 ], Estoque.prototype, "updated_at", void 0);
 Estoque = __decorate([
-    (0, typeorm_1.Entity)("estoques"),
+    Entity("estoques"),
     __metadata("design:paramtypes", [])
 ], Estoque);
-exports.Estoque = Estoque;
+export { Estoque };
 //# sourceMappingURL=Estoque.js.map
