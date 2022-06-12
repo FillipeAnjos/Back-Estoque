@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,36 +7,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Quantidade = void 0;
-const typeorm_1 = require("typeorm");
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 let Quantidade = class Quantidade {
     constructor() {
     }
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], Quantidade.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", Number)
 ], Quantidade.prototype, "id_produto", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", Number)
 ], Quantidade.prototype, "quantidade", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)(),
+    CreateDateColumn(),
     __metadata("design:type", Date)
 ], Quantidade.prototype, "created_at", void 0);
 __decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
+    UpdateDateColumn(),
     __metadata("design:type", Date)
 ], Quantidade.prototype, "updated_at", void 0);
 Quantidade = __decorate([
-    (0, typeorm_1.Entity)("quantidades"),
+    Entity("quantidades"),
     __metadata("design:paramtypes", [])
 ], Quantidade);
-exports.Quantidade = Quantidade;
+export { Quantidade };
 //# sourceMappingURL=Quantidade.js.map

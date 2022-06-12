@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateFechamento1640803656242 = void 0;
-const typeorm_1 = require("typeorm");
-class CreateFechamento1640803656242 {
+import { Table } from "typeorm";
+export class CreateFechamento1640803656242 {
     async up(queryRunner) {
-        await queryRunner.createTable(new typeorm_1.Table({
+        await queryRunner.createTable(new Table({
             name: "fechamentos",
             columns: [
                 {
@@ -43,5 +40,4 @@ class CreateFechamento1640803656242 {
         await queryRunner.dropTable("fechamentos");
     }
 }
-exports.CreateFechamento1640803656242 = CreateFechamento1640803656242;
 //# sourceMappingURL=1640803656242-CreateFechamento.js.map

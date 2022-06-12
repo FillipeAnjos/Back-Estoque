@@ -1,18 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-export { _router as router };
-import { Router } from "express";
-import { ProdutoController } from "./controllers/ProdutoController";
-import { UserController } from "./controllers/UserController";
-import { QuantidadeController } from "./controllers/QuantidadeController";
-import { FechamentoController } from "./controllers/FechamentoController";
-import { VendaController } from "./controllers/VendaController";
-import { CategoriaController } from "./controllers/CategoriaController";
-import { ClienteController } from "./controllers/ClienteController";
-import { FornecedorController } from "./controllers/FornecedorController";
-const router = (0, Router)();
-const _router = router;
-export { _router as router };
+import { Router } from 'express';
+import { ProdutoController } from './controllers/ProdutoController';
+import { UserController } from './controllers/UserController';
+import { QuantidadeController } from './controllers/QuantidadeController';
+import { FechamentoController } from './controllers/FechamentoController';
+import { VendaController } from './controllers/VendaController';
+import { CategoriaController } from './controllers/CategoriaController';
+import { ClienteController } from './controllers/ClienteController';
+import { FornecedorController } from './controllers/FornecedorController';
+const router = Router();
 const userController = new UserController();
 const produtoController = new ProdutoController();
 const quantidadeController = new QuantidadeController();
@@ -402,4 +397,5 @@ router.get('/listarFechamentos', async function (req, res) {
 router.get('/', function (req, res) {
     console.log("Sem Front End");
 });
+export { router };
 //# sourceMappingURL=routes.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,56 +7,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Cliente = void 0;
-const typeorm_1 = require("typeorm");
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 let Cliente = class Cliente {
     constructor() {
     }
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], Cliente.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", String)
 ], Cliente.prototype, "nome", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", String)
 ], Cliente.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", String)
 ], Cliente.prototype, "cpf", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", Date)
 ], Cliente.prototype, "nascimento", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", String)
 ], Cliente.prototype, "genero", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", String)
 ], Cliente.prototype, "civil", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", String)
 ], Cliente.prototype, "rg", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)(),
+    CreateDateColumn(),
     __metadata("design:type", Date)
 ], Cliente.prototype, "created_at", void 0);
 __decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
+    UpdateDateColumn(),
     __metadata("design:type", Date)
 ], Cliente.prototype, "updated_at", void 0);
 Cliente = __decorate([
-    (0, typeorm_1.Entity)("clientes"),
+    Entity("clientes"),
     __metadata("design:paramtypes", [])
 ], Cliente);
-exports.Cliente = Cliente;
+export { Cliente };
 //# sourceMappingURL=Cliente.js.map

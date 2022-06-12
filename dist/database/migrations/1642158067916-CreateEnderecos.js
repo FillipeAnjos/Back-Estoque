@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateEnderecos1642158067916 = void 0;
-const typeorm_1 = require("typeorm");
-class CreateEnderecos1642158067916 {
+import { Table } from "typeorm";
+export class CreateEnderecos1642158067916 {
     async up(queryRunner) {
-        await queryRunner.createTable(new typeorm_1.Table({
+        await queryRunner.createTable(new Table({
             name: "enderecos",
             columns: [
                 {
@@ -82,5 +79,4 @@ class CreateEnderecos1642158067916 {
         await queryRunner.dropTable("enderecos");
     }
 }
-exports.CreateEnderecos1642158067916 = CreateEnderecos1642158067916;
 //# sourceMappingURL=1642158067916-CreateEnderecos.js.map

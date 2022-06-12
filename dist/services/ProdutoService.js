@@ -1,14 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProdutoService = void 0;
-const typeorm_1 = require("typeorm");
-const ProdutoRepositories_1 = require("../repositories/ProdutoRepositories");
-const EstoqueService_1 = require("./EstoqueService");
-const QuantidadeService_1 = require("./QuantidadeService");
-const ValorService_1 = require("./ValorService");
+import { getCustomRepository } from "typeorm";
+import { ProdutoRepositories } from "../repositories/ProdutoRepositories";
+import { EstoqueService } from "./EstoqueService";
+import { QuantidadeService } from "./QuantidadeService";
+import { ValorService } from "./ValorService";
 class ProdutoService {
     async buscarCodigo() {
-        const produtoRepository = (0, typeorm_1.getCustomRepository)(ProdutoRepositories_1.ProdutoRepositories);
+        const produtoRepository = getCustomRepository(ProdutoRepositories);
         const produto = await produtoRepository.createQueryBuilder("produtos")
             .orderBy("produtos.id", "DESC")
             .limit(1)
@@ -19,21 +16,21 @@ class ProdutoService {
         return { success: "Retorno da quantidade de produtos.", qtd: produtoId };
     }
     async cadastrarProduto({ codigo, produto, categoria, descricao, cor, tamanho, valor, obs, status }) {
-        const produtoRepository = (0, typeorm_1.getCustomRepository)(ProdutoRepositories_1.ProdutoRepositories);
+        const produtoRepository = getCustomRepository(ProdutoRepositories);
         const produtoSalvado = produtoRepository.create({ produto, categoria, descricao, cor, tamanho, valor, obs, status });
         var prod = await produtoRepository.save(produtoSalvado);
         if (!prod) {
             return { error: "Erro ao salvar o produto." };
         }
-        const valorService = new ValorService_1.ValorService();
+        const valorService = new ValorService();
         valorService.salvarValor(codigo, valor);
-        const quantidadeService = new QuantidadeService_1.QuantidadeService();
+        const quantidadeService = new QuantidadeService();
         var dadosQuantidade = {
             id_produto: codigo,
             quantidade: 1
         };
         quantidadeService.salvarQuantidade(dadosQuantidade);
-        const salvarItem = new EstoqueService_1.EstoqueService();
+        const salvarItem = new EstoqueService();
         var dadosSalvarItemEstoque = {
             id_produto: codigo,
             entrada: 1,
@@ -46,7 +43,7 @@ class ProdutoService {
         return { success: "Produto salvo com sucesso.", prod };
     }
     async listarProdutos(ativos = true) {
-        const produtoRepository = (0, typeorm_1.getCustomRepository)(ProdutoRepositories_1.ProdutoRepositories);
+        const produtoRepository = getCustomRepository(ProdutoRepositories);
         const listarProdutos = await produtoRepository
             .query(`select p.id as id,
                                 p.produto as produto,
@@ -61,7 +58,7 @@ class ProdutoService {
         return listarProdutos;
     }
     async listarProdutosBalancoParam({ filtro, dados, acao }) {
-        let produtoRepository = (0, typeorm_1.getCustomRepository)(ProdutoRepositories_1.ProdutoRepositories);
+        let produtoRepository = getCustomRepository(ProdutoRepositories);
         let dadosProdutos = null;
         let queryInicial = `select 
         p.id as id,
@@ -94,7 +91,7 @@ class ProdutoService {
         return filtrarProdutos;
     }
     async listarProdutosParam({ filtro, dados, acao }) {
-        let produtoRepository = (0, typeorm_1.getCustomRepository)(ProdutoRepositories_1.ProdutoRepositories);
+        let produtoRepository = getCustomRepository(ProdutoRepositories);
         let dadosProdutos = null;
         let queryInicial = `select p.id as id,
         p.produto as produto,
@@ -125,7 +122,7 @@ class ProdutoService {
         return filtrarProdutos;
     }
     async listarProdutosBalanco() {
-        const produtoRepository = (0, typeorm_1.getCustomRepository)(ProdutoRepositories_1.ProdutoRepositories);
+        const produtoRepository = getCustomRepository(ProdutoRepositories);
         const listarProdutos = await produtoRepository
             .query(`select 
                                 p.id as id,
@@ -142,7 +139,7 @@ class ProdutoService {
         return listarProdutos;
     }
     async desativarAtivarItem({ id, acao }) {
-        const produtoRepository = (0, typeorm_1.getCustomRepository)(ProdutoRepositories_1.ProdutoRepositories);
+        const produtoRepository = getCustomRepository(ProdutoRepositories);
         if (!id) {
             return { error: "Erro código invalido." };
         }
@@ -157,7 +154,7 @@ class ProdutoService {
         return acao == false ? { success: "Produto desativado com sucesso." } : { success: "Produto ativado com sucesso." };
     }
     async editarProduto({ codigo, produto, categoria, descricao, cor, tamanho, valor, obs, status }) {
-        const produtoRepository = (0, typeorm_1.getCustomRepository)(ProdutoRepositories_1.ProdutoRepositories);
+        const produtoRepository = getCustomRepository(ProdutoRepositories);
         const produtoEditar = { produto, categoria, descricao, cor, tamanho, valor, obs, status };
         const prodSalved = await produtoRepository.createQueryBuilder("produtos")
             .update("produtos")
@@ -167,7 +164,7 @@ class ProdutoService {
         if (!prodSalved) {
             return { error: "Erro ao atualizar o produto." };
         }
-        const valorService = new ValorService_1.ValorService();
+        const valorService = new ValorService();
         valorService.salvarValor(codigo, valor);
         var produtosListados = await this.listarProdutos(status);
         return { success: "Produto atualizado com sucesso.", prod: produtosListados };
@@ -177,7 +174,7 @@ class ProdutoService {
         var dados = param.dados;
         var ordenacao = param.ordenacao;
         var ordenacaoordem = param.ordenacaoordem;
-        const produtoRepository = (0, typeorm_1.getCustomRepository)(ProdutoRepositories_1.ProdutoRepositories);
+        const produtoRepository = getCustomRepository(ProdutoRepositories);
         let dadosProdutos = null;
         let queryInicial = `select p.id as id,
         p.produto as produto,
@@ -227,5 +224,5 @@ class ProdutoService {
         return filtrarProdutos;
     }
 }
-exports.ProdutoService = ProdutoService;
+export { ProdutoService };
 //# sourceMappingURL=ProdutoService.js.map

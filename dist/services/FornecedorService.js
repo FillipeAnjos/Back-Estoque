@@ -1,14 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FornecedorService = void 0;
-const typeorm_1 = require("typeorm");
-const FornecedorRepositories_1 = require("../repositories/FornecedorRepositories");
-const EnderecoService_1 = require("./EnderecoService");
-const TelefoneService_1 = require("./TelefoneService");
+import { getCustomRepository } from "typeorm";
+import { FornecedorRepositories } from "../repositories/FornecedorRepositories";
+import { EnderecoService } from "./EnderecoService";
+import { TelefoneService } from "./TelefoneService";
 class FornecedorService {
     async cadastrarFornecedor(fornecedor) {
         const { nome, email, cnpj, razao, falarcom, endereco, numero, cel } = fornecedor;
-        const fornecedorRepository = (0, typeorm_1.getCustomRepository)(FornecedorRepositories_1.FornecedorRepositories);
+        const fornecedorRepository = getCustomRepository(FornecedorRepositories);
         const fornecedorCreate = fornecedorRepository.create({ nome, email, cnpj, razao, falarcom });
         const fornecedorSalvar = await fornecedorRepository.save(fornecedorCreate);
         if (!fornecedorSalvar) {
@@ -16,7 +13,7 @@ class FornecedorService {
         }
         const idInserido = await fornecedorRepository.query("select max(id) as id_fornecedor from fornecedores");
         var id_fornecedor = parseInt(idInserido[0].id_fornecedor);
-        const enderecoService = new EnderecoService_1.EnderecoService();
+        const enderecoService = new EnderecoService();
         var bairro = null;
         var municipio = null;
         var uf = null;
@@ -24,7 +21,7 @@ class FornecedorService {
         if (!enderecoCadastrar) {
             return { error: true, msg: "Error ao tentar cadastrar o endereço do fornecedor." };
         }
-        const telefoneService = new TelefoneService_1.TelefoneService();
+        const telefoneService = new TelefoneService();
         var celular2 = null;
         var tel = null;
         const telefoneCadastrar = telefoneService.cadastrarTelefoneFornecedor({ id_fornecedor, telefone: tel, celular: cel, celular2 });
@@ -34,7 +31,7 @@ class FornecedorService {
         return { error: false, msg: "Fornecedor cadastrado com sucesso." };
     }
     async listarFornecedores() {
-        const fornecedorRepository = (0, typeorm_1.getCustomRepository)(FornecedorRepositories_1.FornecedorRepositories);
+        const fornecedorRepository = getCustomRepository(FornecedorRepositories);
         const fornecedores = await fornecedorRepository.query(`select 
             f.id as id,
             f.nome,
@@ -56,7 +53,7 @@ class FornecedorService {
     async listarFornecedoresParam(param) {
         var filtro = parseInt(param.filtro);
         var dados = param.dados;
-        const fornecedorRepository = (0, typeorm_1.getCustomRepository)(FornecedorRepositories_1.FornecedorRepositories);
+        const fornecedorRepository = getCustomRepository(FornecedorRepositories);
         let dadosFornecedores = null;
         let queryInicial = 'select * from fornecedores f inner join enderecos e on f.id = e.id_fornecedor inner join telefones t on t.id_fornecedor = f.id';
         if (filtro == 1) {
@@ -75,7 +72,7 @@ class FornecedorService {
         return filtrarFornecedores;
     }
     async excluirFornecedor({ id }) {
-        const fornecedorRepository = (0, typeorm_1.getCustomRepository)(FornecedorRepositories_1.FornecedorRepositories);
+        const fornecedorRepository = getCustomRepository(FornecedorRepositories);
         if (!id) {
             return { error: true, msg: "Erro código invalido." };
         }
@@ -94,7 +91,7 @@ class FornecedorService {
         return { error: false, msg: "Fornecedor excluso com sucesso." };
     }
     async editarFornecedor({ id, nome, cnpj, razao, falarcom, endereco, numero, cel, email }) {
-        const fornecedorRepository = (0, typeorm_1.getCustomRepository)(FornecedorRepositories_1.FornecedorRepositories);
+        const fornecedorRepository = getCustomRepository(FornecedorRepositories);
         const updateFornecedor = fornecedorRepository.createQueryBuilder("fornecedores")
             .update("fornecedores")
             .set({ nome: nome, email: email, cnpj: cnpj, razao: razao, falarcom: falarcom })
@@ -103,13 +100,13 @@ class FornecedorService {
         if (!updateFornecedor) {
             return { error: true, msg: "Ocorreu um erro ao atualizar os dados do fornecedor." };
         }
-        const enderecoService = new EnderecoService_1.EnderecoService();
+        const enderecoService = new EnderecoService();
         var uf = null;
         const updateEndereco = enderecoService.editarEnderecoFornecedor({ id_fornecedor: parseInt(id), rua: endereco, numero, uf });
         if (!updateEndereco) {
             return { error: true, msg: "Ocorreu um erro ao atualizar os dados do endereco." };
         }
-        const telefoneService = new TelefoneService_1.TelefoneService();
+        const telefoneService = new TelefoneService();
         var tel = null;
         const updateTelefone = telefoneService.editarTelefoneFornecedor({ id_fornecedor: parseInt(id), telefone: tel, celular: cel });
         if (!updateTelefone) {
@@ -122,7 +119,7 @@ class FornecedorService {
         var dados = param.dados;
         var ordenacao = param.ordenacao;
         var ordenacaoordem = param.ordenacaoordem;
-        const fornecedoresRepository = (0, typeorm_1.getCustomRepository)(FornecedorRepositories_1.FornecedorRepositories);
+        const fornecedoresRepository = getCustomRepository(FornecedorRepositories);
         let dadosFornecedores = null;
         let queryInicial = `select * from fornecedores`;
         if (filtro == 1) {
@@ -148,5 +145,5 @@ class FornecedorService {
         return filtrarFornecedores;
     }
 }
-exports.FornecedorService = FornecedorService;
+export { FornecedorService };
 //# sourceMappingURL=FornecedorService.js.map

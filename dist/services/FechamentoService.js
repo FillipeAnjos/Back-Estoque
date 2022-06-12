@@ -1,16 +1,10 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FechamentoService = void 0;
-const typeorm_1 = require("typeorm");
-const FechamentoRepositories_1 = require("../repositories/FechamentoRepositories");
-const moment_1 = __importDefault(require("moment"));
-const VendaService_1 = require("./VendaService");
+import { getCustomRepository } from "typeorm";
+import { FechamentoRepositories } from "../repositories/FechamentoRepositories";
+import moment from "moment";
+import { VendaService } from "./VendaService";
 class FechamentoService {
     async varStatusDataAterior() {
-        const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+        const fechamentoRepository = getCustomRepository(FechamentoRepositories);
         const dataAtual = new Date();
         const verificarDataCaixa = await fechamentoRepository.createQueryBuilder("fechamentos")
             .where("data < :dataatual", { dataatual: dataAtual })
@@ -23,8 +17,8 @@ class FechamentoService {
         if (statusAnterior != true) {
             return statusAnterior;
         }
-        const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
-        const dataAtual = (0, moment_1.default)(new Date()).format("YYYY-MM-DD");
+        const fechamentoRepository = getCustomRepository(FechamentoRepositories);
+        const dataAtual = moment(new Date()).format("YYYY-MM-DD");
         const verificarDataCaixa = await fechamentoRepository.createQueryBuilder("fechamentos")
             .where("data = :dataatual", { dataatual: dataAtual })
             .getOne();
@@ -45,8 +39,8 @@ class FechamentoService {
         }
     }
     async fechamentoSalvar({ valor_total, data, status }) {
-        const dataAtual = (0, moment_1.default)(new Date()).format("YYYY-MM-DD");
-        const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+        const dataAtual = moment(new Date()).format("YYYY-MM-DD");
+        const fechamentoRepository = getCustomRepository(FechamentoRepositories);
         if (status == true) {
             const fechamentoSalvado = fechamentoRepository.create({ valor_total, data: new Date(), status });
             var fechar = await fechamentoRepository.save(fechamentoSalvado);
@@ -71,7 +65,7 @@ class FechamentoService {
         }
     }
     async fechamentoSalvarAnterior({ valor_total, data, status }) {
-        const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+        const fechamentoRepository = getCustomRepository(FechamentoRepositories);
         const fechamentoEditarAnterior = { valor_total, data, status };
         const fechamentoUpdateAnterior = await fechamentoRepository.createQueryBuilder("fechamentos")
             .update("fechamentos")
@@ -85,7 +79,7 @@ class FechamentoService {
         return retorno;
     }
     async buscarIdFechamento() {
-        const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+        const fechamentoRepository = getCustomRepository(FechamentoRepositories);
         const idFechamento = await fechamentoRepository.createQueryBuilder("fechamentos")
             .where("valor_total = :vl", { vl: 0 })
             .andWhere("status = :status", { status: true })
@@ -94,7 +88,7 @@ class FechamentoService {
         return id;
     }
     async buscarVendasDia() {
-        const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+        const fechamentoRepository = getCustomRepository(FechamentoRepositories);
         const fechamentoDia = await fechamentoRepository.createQueryBuilder("fechamentos")
             .where("status = :status", { status: true })
             .getOne();
@@ -102,7 +96,7 @@ class FechamentoService {
             return false;
         }
         const { id } = fechamentoDia;
-        const vendaService = new VendaService_1.VendaService();
+        const vendaService = new VendaService();
         const valorVendaDia = vendaService.buscarValorDia(id);
         if (await valorVendaDia == undefined) {
             return false;
@@ -110,7 +104,7 @@ class FechamentoService {
         return { error: false, msg: "Venda do dia somada com sucesso.", valor_total: await valorVendaDia };
     }
     async buscarFechamentosPorMes(interacao) {
-        const fechamentoRepository = (0, typeorm_1.getCustomRepository)(FechamentoRepositories_1.FechamentoRepositories);
+        const fechamentoRepository = getCustomRepository(FechamentoRepositories);
         var anoAtual = new Date().getFullYear();
         var query = `select count(fechamentos.id) as fechamentosmes from fechamentos where EXTRACT(MONTH  from fechamentos.data) = ${interacao} and EXTRACT(YEAR from fechamentos.data) = ${anoAtual}`;
         var fechamentos = await fechamentoRepository.query(query);
@@ -124,5 +118,5 @@ class FechamentoService {
         return array;
     }
 }
-exports.FechamentoService = FechamentoService;
+export { FechamentoService };
 //# sourceMappingURL=FechamentoService.js.map
