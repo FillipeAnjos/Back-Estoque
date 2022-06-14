@@ -25,7 +25,7 @@ React Js / Next Js / Sass / TypeScript / JavaScript / TypeOrm / PostgreSQL
 npm install typeorm
 
 ### Instalação o express
-npm add express
+npm install express
 npm add @types/express - D
 
 ### Instalação do ts node dev - bem parecido com o nodmon
