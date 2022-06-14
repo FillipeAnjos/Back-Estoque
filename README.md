@@ -21,28 +21,51 @@ React Js / Next Js / Sass / TypeScript / JavaScript / TypeOrm / PostgreSQL
 
 ## Bibliotecas
 
+### Instalação do ORM Typeorm
 npm install typeorm
 
+### Instalação o express
 npm add express
 npm add @types/express - D
 
+### Instalação do ts node dev - bem parecido com o nodmon
 npm add ts-node-dev -D
 
+### Instalar o Typescript
 npm install typescript
 
+### Usar criptografia
 npm install bcryptjs
 npm add @types/bcryptjs -D
 
+### Usar o banco de dados MySQL
 npm install mysql --save
 
+### Usar o banco de dados PostgreSQL
 npm install pg
 
+### Instalação do Metadata
 npm install reflect-metadata
 
+### Para evitar erro cors
 npm add cors
 npm add @types/cors -D
 
+### Referente a formatação de datas
 npm install moment --save
+
+### Referente ao babel para "build" e depois "start"
+npm add @babel/cli -D
+npm add @babel/core -D
+npm add @babel/node -D
+npm add @babel/plugin-proposal-class-properties -D
+npm add @babel/plugin-proposal-decorators -D
+npm add @babel/preset-env -D
+npm add babel-plugin-module-resolver -D
+npm add babel-plugin-transform-typescript-metadata -D
+npm add @babel/preset-typescript -D
+
+### -----------------------------------------------------
 
 ### BACK-END COMANDOS
 
