@@ -1,3 +1,5 @@
-import { createConnection } from 'typeorm';
-createConnection();
-//# sourceMappingURL=index.js.map
+"use strict";
+
+var _typeorm = require("typeorm");
+
+(0, _typeorm.createConnection)();
