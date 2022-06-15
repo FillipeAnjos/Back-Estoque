@@ -1,5 +1,7 @@
 "use strict";
 
+var _dotenv = _interopRequireDefault(require("dotenv"));
+
 var _routes = require("./routes");
 
 var _express = _interopRequireDefault(require("express"));
@@ -11,6 +13,8 @@ require("reflect-metadata");
 require("./database");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_dotenv.default.config();
 
 const app = (0, _express.default)();
 app.use((0, _cors.default)());

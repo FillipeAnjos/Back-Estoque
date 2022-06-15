@@ -54,6 +54,9 @@ npm add @types/cors -D
 ### Referente a formatação de datas
 npm install moment --save
 
+### Referente ao entendimento de variaveis ambientes
+npm install dotenv
+
 ### Referente ao babel para "build" e depois "start"
 npm add @babel/cli -D
 npm add @babel/core -D
