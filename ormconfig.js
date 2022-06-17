@@ -4,7 +4,7 @@ console.log("ENTITIES: " + process.env.ENTITIES);
 module.exports = {
     "type": "postgres",
     "url": process.env.DATABASE_URL,
-    "ssl": null,
+    "ssl": { rejectUnauthorized: false },
     "migrationsRun": true,
     "logging": true,
     "migrations": [process.env.MIGRATIONS],
