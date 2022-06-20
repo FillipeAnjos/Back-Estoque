@@ -70,13 +70,16 @@ npm add @babel/preset-typescript -D
 
 ### -----------------------------------------------------
 
-### BACK-END COMANDOS
+### BACK-END COMANDOS - TYPEORM
 
 //Comando para criar uma migration
 npx typeorm migration:create -n Create<nome da migration>
 
 //Comando para rodar as migrations
 npm run typeorm migration:run
+
+//Comando para rodar as migrations - SERVIDOR
+npx typeorm migration:run
 
 ## FRONT-END
 
