@@ -6,7 +6,7 @@ console.log("-------------------------------------------------------------------
 module.exports = {
     "type": "postgres",
     "url": process.env.DATABASE_URL,
-    "ssl": null,
+    "ssl": { rejectUnauthorized: false },
     "migrationsRun": false,
     "logging": false,
     "migrations": [process.env.MIGRATIONS],
