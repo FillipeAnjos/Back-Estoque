@@ -120,7 +120,7 @@ class UserService{
 
         const usersRepository = getCustomRepository(UsersRepositories);
 
-        const usuarios = await usersRepository.query(`select * from users order by id desc limit 5`);
+        const usuarios = await usersRepository.query(`select * from users order by id desc limit 3`);
 
         return usuarios;
 
